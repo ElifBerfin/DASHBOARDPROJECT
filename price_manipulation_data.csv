@@ -1,0 +1,181 @@
+date,product_name,seller,actual_price,claimed_original_price,is_manipulation,real_old_price
+2026-04-10,Samsung Galaxy S23 Ultra,ElectroWorld,1188.0,1188.0,False,1200
+2026-04-11,Samsung Galaxy S23 Ultra,ElectroWorld,1200.0,1200.0,False,1200
+2026-04-12,Samsung Galaxy S23 Ultra,ElectroWorld,1200.0,1200.0,False,1200
+2026-04-13,Samsung Galaxy S23 Ultra,ElectroWorld,1200.0,1200.0,False,1200
+2026-04-14,Samsung Galaxy S23 Ultra,ElectroWorld,1200.0,1200.0,False,1200
+2026-04-15,Samsung Galaxy S23 Ultra,ElectroWorld,1212.0,1212.0,False,1200
+2026-04-16,Samsung Galaxy S23 Ultra,ElectroWorld,1200.0,1200.0,False,1200
+2026-04-17,Samsung Galaxy S23 Ultra,ElectroWorld,1200.0,1200.0,False,1200
+2026-04-18,Samsung Galaxy S23 Ultra,ElectroWorld,1200.0,1200.0,False,1200
+2026-04-19,Samsung Galaxy S23 Ultra,ElectroWorld,1212.0,1212.0,False,1200
+2026-04-20,Samsung Galaxy S23 Ultra,ElectroWorld,1200.0,1200.0,False,1200
+2026-04-21,Samsung Galaxy S23 Ultra,ElectroWorld,1200.0,1200.0,False,1200
+2026-04-22,Samsung Galaxy S23 Ultra,ElectroWorld,1188.0,1188.0,False,1200
+2026-04-23,Samsung Galaxy S23 Ultra,ElectroWorld,1200.0,1200.0,False,1200
+2026-04-24,Samsung Galaxy S23 Ultra,ElectroWorld,1188.0,1188.0,False,1200
+2026-04-25,Samsung Galaxy S23 Ultra,ElectroWorld,1200.0,1200.0,False,1200
+2026-04-26,Samsung Galaxy S23 Ultra,ElectroWorld,1200.0,1200.0,False,1200
+2026-04-27,Samsung Galaxy S23 Ultra,ElectroWorld,1212.0,1212.0,False,1200
+2026-04-28,Samsung Galaxy S23 Ultra,ElectroWorld,1200.0,1200.0,False,1200
+2026-04-29,Samsung Galaxy S23 Ultra,ScamSeller_1,1800.0,2400.0,True,1200
+2026-04-30,Samsung Galaxy S23 Ultra,ScamSeller_1,1800.0,2400.0,True,1200
+2026-05-01,Samsung Galaxy S23 Ultra,ScamSeller_1,1800.0,2400.0,True,1200
+2026-05-02,Samsung Galaxy S23 Ultra,ScamSeller_1,1800.0,2400.0,True,1200
+2026-05-03,Samsung Galaxy S23 Ultra,ScamSeller_1,1800.0,2400.0,True,1200
+2026-05-04,Samsung Galaxy S23 Ultra,ScamSeller_1,1800.0,2400.0,True,1200
+2026-05-05,Samsung Galaxy S23 Ultra,ScamSeller_1,1800.0,2400.0,True,1200
+2026-05-06,Samsung Galaxy S23 Ultra,ElectroWorld,1188.0,1188.0,False,1200
+2026-05-07,Samsung Galaxy S23 Ultra,ElectroWorld,1200.0,1200.0,False,1200
+2026-05-08,Samsung Galaxy S23 Ultra,ElectroWorld,1188.0,1188.0,False,1200
+2026-05-09,Samsung Galaxy S23 Ultra,ElectroWorld,1200.0,1200.0,False,1200
+2026-04-10,Apple iPhone 14 Pro Max,AppleStore,1100.0,1100.0,False,1100
+2026-04-11,Apple iPhone 14 Pro Max,AppleStore,1100.0,1100.0,False,1100
+2026-04-12,Apple iPhone 14 Pro Max,AppleStore,1111.0,1111.0,False,1100
+2026-04-13,Apple iPhone 14 Pro Max,AppleStore,1100.0,1100.0,False,1100
+2026-04-14,Apple iPhone 14 Pro Max,AppleStore,1089.0,1089.0,False,1100
+2026-04-15,Apple iPhone 14 Pro Max,AppleStore,1100.0,1100.0,False,1100
+2026-04-16,Apple iPhone 14 Pro Max,AppleStore,1111.0,1111.0,False,1100
+2026-04-17,Apple iPhone 14 Pro Max,AppleStore,1100.0,1100.0,False,1100
+2026-04-18,Apple iPhone 14 Pro Max,AppleStore,1111.0,1111.0,False,1100
+2026-04-19,Apple iPhone 14 Pro Max,AppleStore,1100.0,1100.0,False,1100
+2026-04-20,Apple iPhone 14 Pro Max,AppleStore,1100.0,1100.0,False,1100
+2026-04-21,Apple iPhone 14 Pro Max,AppleStore,1089.0,1089.0,False,1100
+2026-04-22,Apple iPhone 14 Pro Max,AppleStore,1100.0,1100.0,False,1100
+2026-04-23,Apple iPhone 14 Pro Max,AppleStore,1100.0,1100.0,False,1100
+2026-04-24,Apple iPhone 14 Pro Max,AppleStore,1100.0,1100.0,False,1100
+2026-04-25,Apple iPhone 14 Pro Max,AppleStore,880.0,1100.0,False,1100
+2026-04-26,Apple iPhone 14 Pro Max,AppleStore,880.0,1100.0,False,1100
+2026-04-27,Apple iPhone 14 Pro Max,AppleStore,880.0,1100.0,False,1100
+2026-04-28,Apple iPhone 14 Pro Max,AppleStore,880.0,1100.0,False,1100
+2026-04-29,Apple iPhone 14 Pro Max,AppleStore,880.0,1100.0,False,1100
+2026-04-30,Apple iPhone 14 Pro Max,AppleStore,880.0,1100.0,False,1100
+2026-05-01,Apple iPhone 14 Pro Max,AppleStore,880.0,1100.0,False,1100
+2026-05-02,Apple iPhone 14 Pro Max,AppleStore,1100.0,1100.0,False,1100
+2026-05-03,Apple iPhone 14 Pro Max,AppleStore,1100.0,1100.0,False,1100
+2026-05-04,Apple iPhone 14 Pro Max,AppleStore,1100.0,1100.0,False,1100
+2026-05-05,Apple iPhone 14 Pro Max,AppleStore,1100.0,1100.0,False,1100
+2026-05-06,Apple iPhone 14 Pro Max,AppleStore,1100.0,1100.0,False,1100
+2026-05-07,Apple iPhone 14 Pro Max,AppleStore,1100.0,1100.0,False,1100
+2026-05-08,Apple iPhone 14 Pro Max,AppleStore,1100.0,1100.0,False,1100
+2026-05-09,Apple iPhone 14 Pro Max,AppleStore,1100.0,1100.0,False,1100
+2026-04-10,Tarte Shape Tape Concealer,BeautyCosmetics,30.0,30.0,False,30
+2026-04-11,Tarte Shape Tape Concealer,BeautyCosmetics,29.7,29.7,False,30
+2026-04-12,Tarte Shape Tape Concealer,BeautyCosmetics,30.0,30.0,False,30
+2026-04-13,Tarte Shape Tape Concealer,BeautyCosmetics,30.0,30.0,False,30
+2026-04-14,Tarte Shape Tape Concealer,BeautyCosmetics,30.0,30.0,False,30
+2026-04-15,Tarte Shape Tape Concealer,BeautyCosmetics,30.0,30.0,False,30
+2026-04-16,Tarte Shape Tape Concealer,BeautyCosmetics,30.0,30.0,False,30
+2026-04-17,Tarte Shape Tape Concealer,BeautyCosmetics,30.0,30.0,False,30
+2026-04-18,Tarte Shape Tape Concealer,BeautyCosmetics,30.0,30.0,False,30
+2026-04-19,Tarte Shape Tape Concealer,BeautyCosmetics,29.7,29.7,False,30
+2026-04-20,Tarte Shape Tape Concealer,BeautyCosmetics,30.3,30.3,False,30
+2026-04-21,Tarte Shape Tape Concealer,BeautyCosmetics,29.7,29.7,False,30
+2026-04-22,Tarte Shape Tape Concealer,BeautyCosmetics,29.7,29.7,False,30
+2026-04-23,Tarte Shape Tape Concealer,BeautyCosmetics,30.3,30.3,False,30
+2026-04-24,Tarte Shape Tape Concealer,ScamSeller_1,45.0,60.0,True,30
+2026-04-25,Tarte Shape Tape Concealer,ScamSeller_1,45.0,60.0,True,30
+2026-04-26,Tarte Shape Tape Concealer,ScamSeller_1,45.0,60.0,True,30
+2026-04-27,Tarte Shape Tape Concealer,ScamSeller_1,45.0,60.0,True,30
+2026-04-28,Tarte Shape Tape Concealer,ScamSeller_1,45.0,60.0,True,30
+2026-04-29,Tarte Shape Tape Concealer,ScamSeller_1,45.0,60.0,True,30
+2026-04-30,Tarte Shape Tape Concealer,ScamSeller_1,45.0,60.0,True,30
+2026-05-01,Tarte Shape Tape Concealer,BeautyCosmetics,30.0,30.0,False,30
+2026-05-02,Tarte Shape Tape Concealer,BeautyCosmetics,30.0,30.0,False,30
+2026-05-03,Tarte Shape Tape Concealer,BeautyCosmetics,30.0,30.0,False,30
+2026-05-04,Tarte Shape Tape Concealer,BeautyCosmetics,30.0,30.0,False,30
+2026-05-05,Tarte Shape Tape Concealer,BeautyCosmetics,30.0,30.0,False,30
+2026-05-06,Tarte Shape Tape Concealer,BeautyCosmetics,30.0,30.0,False,30
+2026-05-07,Tarte Shape Tape Concealer,BeautyCosmetics,30.0,30.0,False,30
+2026-05-08,Tarte Shape Tape Concealer,BeautyCosmetics,30.0,30.0,False,30
+2026-05-09,Tarte Shape Tape Concealer,BeautyCosmetics,30.0,30.0,False,30
+2026-04-10,Oysho Women's Compression Leggings,SportFit,50.0,50.0,False,50
+2026-04-11,Oysho Women's Compression Leggings,SportFit,50.0,50.0,False,50
+2026-04-12,Oysho Women's Compression Leggings,SportFit,49.5,49.5,False,50
+2026-04-13,Oysho Women's Compression Leggings,SportFit,50.0,50.0,False,50
+2026-04-14,Oysho Women's Compression Leggings,SportFit,50.0,50.0,False,50
+2026-04-15,Oysho Women's Compression Leggings,SportFit,50.0,50.0,False,50
+2026-04-16,Oysho Women's Compression Leggings,SportFit,50.0,50.0,False,50
+2026-04-17,Oysho Women's Compression Leggings,SportFit,50.0,50.0,False,50
+2026-04-18,Oysho Women's Compression Leggings,SportFit,50.0,50.0,False,50
+2026-04-19,Oysho Women's Compression Leggings,SportFit,50.0,50.0,False,50
+2026-04-20,Oysho Women's Compression Leggings,SportFit,50.0,50.0,False,50
+2026-04-21,Oysho Women's Compression Leggings,SportFit,50.0,50.0,False,50
+2026-04-22,Oysho Women's Compression Leggings,SportFit,50.5,50.5,False,50
+2026-04-23,Oysho Women's Compression Leggings,SportFit,50.0,50.0,False,50
+2026-04-24,Oysho Women's Compression Leggings,SportFit,50.0,50.0,False,50
+2026-04-25,Oysho Women's Compression Leggings,SportFit,49.5,49.5,False,50
+2026-04-26,Oysho Women's Compression Leggings,SportFit,50.0,50.0,False,50
+2026-04-27,Oysho Women's Compression Leggings,SportFit,50.5,50.5,False,50
+2026-04-28,Oysho Women's Compression Leggings,SportFit,50.0,50.0,False,50
+2026-04-29,Oysho Women's Compression Leggings,SportFit,50.0,50.0,False,50
+2026-04-30,Oysho Women's Compression Leggings,SportFit,40.0,50.0,False,50
+2026-05-01,Oysho Women's Compression Leggings,SportFit,40.0,50.0,False,50
+2026-05-02,Oysho Women's Compression Leggings,SportFit,40.0,50.0,False,50
+2026-05-03,Oysho Women's Compression Leggings,SportFit,40.0,50.0,False,50
+2026-05-04,Oysho Women's Compression Leggings,SportFit,40.0,50.0,False,50
+2026-05-05,Oysho Women's Compression Leggings,SportFit,40.0,50.0,False,50
+2026-05-06,Oysho Women's Compression Leggings,SportFit,40.0,50.0,False,50
+2026-05-07,Oysho Women's Compression Leggings,SportFit,50.0,50.0,False,50
+2026-05-08,Oysho Women's Compression Leggings,SportFit,50.0,50.0,False,50
+2026-05-09,Oysho Women's Compression Leggings,SportFit,50.0,50.0,False,50
+2026-04-10,Adidas Running Shoes,ShoeCenter,60.0,60.0,False,60
+2026-04-11,Adidas Running Shoes,ShoeCenter,60.0,60.0,False,60
+2026-04-12,Adidas Running Shoes,ShoeCenter,60.0,60.0,False,60
+2026-04-13,Adidas Running Shoes,ShoeCenter,60.0,60.0,False,60
+2026-04-14,Adidas Running Shoes,ShoeCenter,60.0,60.0,False,60
+2026-04-15,Adidas Running Shoes,ShoeCenter,60.0,60.0,False,60
+2026-04-16,Adidas Running Shoes,ShoeCenter,60.6,60.6,False,60
+2026-04-17,Adidas Running Shoes,ShoeCenter,60.0,60.0,False,60
+2026-04-18,Adidas Running Shoes,ShoeCenter,60.0,60.0,False,60
+2026-04-19,Adidas Running Shoes,ShoeCenter,60.0,60.0,False,60
+2026-04-20,Adidas Running Shoes,ShoeCenter,59.4,59.4,False,60
+2026-04-21,Adidas Running Shoes,ShoeCenter,60.6,60.6,False,60
+2026-04-22,Adidas Running Shoes,ShoeCenter,60.6,60.6,False,60
+2026-04-23,Adidas Running Shoes,ShoeCenter,60.0,60.0,False,60
+2026-04-24,Adidas Running Shoes,ShoeCenter,60.0,60.0,False,60
+2026-04-25,Adidas Running Shoes,ShoeCenter,60.0,60.0,False,60
+2026-04-26,Adidas Running Shoes,ShoeCenter,60.0,60.0,False,60
+2026-04-27,Adidas Running Shoes,ShoeCenter,60.0,60.0,False,60
+2026-04-28,Adidas Running Shoes,ScamSeller_1,90.0,120.0,True,60
+2026-04-29,Adidas Running Shoes,ScamSeller_1,90.0,120.0,True,60
+2026-04-30,Adidas Running Shoes,ScamSeller_1,90.0,120.0,True,60
+2026-05-01,Adidas Running Shoes,ScamSeller_1,90.0,120.0,True,60
+2026-05-02,Adidas Running Shoes,ScamSeller_1,90.0,120.0,True,60
+2026-05-03,Adidas Running Shoes,ScamSeller_1,90.0,120.0,True,60
+2026-05-04,Adidas Running Shoes,ScamSeller_1,90.0,120.0,True,60
+2026-05-05,Adidas Running Shoes,ShoeCenter,60.0,60.0,False,60
+2026-05-06,Adidas Running Shoes,ShoeCenter,60.0,60.0,False,60
+2026-05-07,Adidas Running Shoes,ShoeCenter,60.0,60.0,False,60
+2026-05-08,Adidas Running Shoes,ShoeCenter,60.6,60.6,False,60
+2026-05-09,Adidas Running Shoes,ShoeCenter,60.0,60.0,False,60
+2026-04-10,New Balance Sneakers,UrbanKicks,85.0,85.0,False,85
+2026-04-11,New Balance Sneakers,UrbanKicks,85.0,85.0,False,85
+2026-04-12,New Balance Sneakers,UrbanKicks,84.15,84.15,False,85
+2026-04-13,New Balance Sneakers,UrbanKicks,85.0,85.0,False,85
+2026-04-14,New Balance Sneakers,UrbanKicks,85.0,85.0,False,85
+2026-04-15,New Balance Sneakers,UrbanKicks,85.0,85.0,False,85
+2026-04-16,New Balance Sneakers,UrbanKicks,85.85,85.85,False,85
+2026-04-17,New Balance Sneakers,UrbanKicks,85.0,85.0,False,85
+2026-04-18,New Balance Sneakers,UrbanKicks,85.0,85.0,False,85
+2026-04-19,New Balance Sneakers,UrbanKicks,85.0,85.0,False,85
+2026-04-20,New Balance Sneakers,UrbanKicks,84.15,84.15,False,85
+2026-04-21,New Balance Sneakers,UrbanKicks,85.0,85.0,False,85
+2026-04-22,New Balance Sneakers,UrbanKicks,68.0,85.0,False,85
+2026-04-23,New Balance Sneakers,UrbanKicks,68.0,85.0,False,85
+2026-04-24,New Balance Sneakers,UrbanKicks,68.0,85.0,False,85
+2026-04-25,New Balance Sneakers,UrbanKicks,68.0,85.0,False,85
+2026-04-26,New Balance Sneakers,UrbanKicks,68.0,85.0,False,85
+2026-04-27,New Balance Sneakers,UrbanKicks,68.0,85.0,False,85
+2026-04-28,New Balance Sneakers,UrbanKicks,68.0,85.0,False,85
+2026-04-29,New Balance Sneakers,UrbanKicks,84.15,84.15,False,85
+2026-04-30,New Balance Sneakers,UrbanKicks,85.0,85.0,False,85
+2026-05-01,New Balance Sneakers,UrbanKicks,84.15,84.15,False,85
+2026-05-02,New Balance Sneakers,UrbanKicks,85.0,85.0,False,85
+2026-05-03,New Balance Sneakers,UrbanKicks,84.15,84.15,False,85
+2026-05-04,New Balance Sneakers,UrbanKicks,85.0,85.0,False,85
+2026-05-05,New Balance Sneakers,UrbanKicks,85.0,85.0,False,85
+2026-05-06,New Balance Sneakers,UrbanKicks,85.0,85.0,False,85
+2026-05-07,New Balance Sneakers,UrbanKicks,85.0,85.0,False,85
+2026-05-08,New Balance Sneakers,UrbanKicks,85.0,85.0,False,85
+2026-05-09,New Balance Sneakers,UrbanKicks,85.0,85.0,False,85

@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+venv/
+env/
+.venv/
+myenv/
+.env
+
+# PyTorch ve Model Çıktıları
+*.pth
+*.pt
+*.bin
+*.safetensors
+results_*/
+checkpoint*/
+runs/

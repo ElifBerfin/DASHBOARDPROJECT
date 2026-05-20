@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail Dashboard</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .product-image-container {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            text-align: center;
+            padding: 20px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .product-image {
+            max-height: 250px;
+            max-width: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin: 0 auto;
+        }
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            filter: invert(100%); /* Beyaz olan okları siyah yapar */
+        }
+        .sentiment-bar {
+            height: 12px;
+            border-radius: 10px;
+        }
+        .ai-alert-box {
+            border-left: 5px solid #dc3545;
+            background-color: #fff8f8;
+        }
+        .ai-safe-box {
+            border-left: 5px solid #198754;
+            background-color: #f4fdf8;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Menu -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="#">
+                <i class="fas fa-chart-line me-2"></i>Analytics Platform
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-smile me-1"></i>Sentiment Analysis</a></li>
+                    <li class="nav-item"><a class="nav-link" href="price-manipulation.html"><i class="fas fa-exclamation-triangle me-1"></i>Price Manipulation</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="product-detail.html"><i class="fas fa-box me-1"></i>Product Detail</a></li>
+                    <li class="nav-item"><a class="nav-link" href="manipulation-campaigns.html"><i class="fas fa-bullseye me-1"></i>Campaigns</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container p-4">
+        <!-- Header & Product Selector -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="dashboard-title m-0">360° Product Analysis</h2>
+            <div class="d-flex gap-2">
+                <select class="form-select shadow-sm font-monospace" id="productSelector" onchange="loadProductDetails()" style="min-width: 250px;">
+                    <option value="samsung">Samsung Galaxy S23 Ultra</option>
+                    <option value="apple">Apple iPhone 14 Pro Max</option>
+                    <option value="tarte">Tarte Shape Tape Concealer</option>
+                    <option value="oysho">Oysho Women's Compression Leggings</option>
+                    <option value="adidas">Adidas Running Shoes</option>
+                    <option value="newbalance">New Balance Sneakers</option>
+                </select>
+                <button class="btn btn-primary shadow-sm text-nowrap" id="refreshBtn" onclick="loadProductDetails()">
+                    <i class="fas fa-sync-alt me-2"></i>Analyze
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Product Card -->
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body p-4">
+                <div class="row">
+                    <!-- Left Col: Image Carousel -->
+                    <div class="col-md-4 mb-3 mb-md-0">
+                        <div class="product-image-container">
+                            <!-- Slider Başlangıcı -->
+                            <div id="productImageCarousel" class="carousel slide w-100" data-bs-ride="carousel">
+                                <div class="carousel-inner" id="carouselInner">
+                                    <!-- Images injected via JS -->
+                                </div>
+                                <div id="carouselControls">
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#productImageCarousel" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#productImageCarousel" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- Slider Bitişi -->
+                        </div>
+                    </div>
+                    
+                    <!-- Right Col: Details -->
+                    <div class="col-md-8">
+                        <h3 id="productTitle" class="fw-bold text-dark mb-1">...</h3>
+                        <p class="text-muted mb-3"><i class="fas fa-store me-2"></i>Seller: <span id="productSeller" class="fw-bold text-dark">...</span></p>
+                        
+                        <!-- AI Price Manipulation Status -->
+                        <div id="aiPriceAlert" class="p-3 mb-4 rounded ai-safe-box shadow-sm">
+                            <div class="d-flex align-items-center">
+                                <div id="alertIcon" class="me-3 fs-3 text-success"><i class="fas fa-shield-check"></i></div>
+                                <div>
+                                    <h6 id="alertTitle" class="mb-1 fw-bold text-success">Verifying Price...</h6>
+                                    <small id="alertDesc" class="text-muted">AI is analyzing price history.</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row g-3">
+                            <!-- Price Info -->
+                            <div class="col-sm-6">
+                                <div class="p-3 border rounded bg-light h-100">
+                                    <h6 class="text-muted mb-2">Current Price</h6>
+                                    <h3 class="text-dark fw-bold m-0" id="currentPrice">...</h3>
+                                    <div id="oldPriceContainer" class="mt-1" style="display:none;">
+                                        <small class="text-muted">Claimed Old Price: <del class="text-danger" id="oldPrice">...</del></small>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Sentiment Info -->
+                            <div class="col-sm-6">
+                                <div class="p-3 border rounded bg-light h-100">
+                                    <h6 class="text-muted mb-2">NLP Sentiment Score</h6>
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <small class="text-success fw-bold"><i class="fas fa-smile me-1"></i><span id="posLabel">0%</span></small>
+                                        <small class="text-danger fw-bold"><i class="fas fa-frown me-1"></i><span id="negLabel">0%</span></small>
+                                    </div>
+                                    <div class="progress sentiment-bar">
+                                        <div id="posBar" class="progress-bar bg-success" role="progressbar" style="width: 0%"></div>
+                                        <div id="neuBar" class="progress-bar bg-secondary opacity-50" role="progressbar" style="width: 100%"></div>
+                                        <div id="negBar" class="progress-bar bg-danger" role="progressbar" style="width: 0%"></div>
+                                    </div>
+                                    <div class="mt-2 text-center">
+                                        <small class="text-muted" id="reviewCountLabel">Analyzing reviews...</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Ürün veritabanı ve çoklu resim (Carousel) eşleştirmesi
+        const productConfig = {
+            'samsung': { 
+                name: 'Samsung Galaxy S23 Ultra', 
+                images: ['images/samsung1.png', 'images/samsung2.png'], 
+                csvKey: 'samsung' 
+            },
+            'apple': { 
+                name: 'Apple iPhone 14 Pro Max', 
+                images: ['images/apple1.png', 'images/apple2.png'], 
+                csvKey: 'apple' 
+            },
+            'tarte': { 
+                name: 'Tarte Shape Tape Concealer', 
+                images: ['images/tarte1.png', 'images/tarte2.png'], 
+                csvKey: 'tarte' 
+            },
+            'oysho': { 
+                name: 'Oysho Women\'s Compression Leggings', 
+                images: ['images/oysho1.png', 'images/oysho2.png'], 
+                csvKey: 'oysho' 
+            },
+            'adidas': { 
+                name: 'Adidas Running Shoes', 
+                images: ['images/adidas1.png', 'images/adidas2.png'], 
+                csvKey: 'adidas' 
+            },
+            'newbalance': { 
+                name: 'New Balance Sneakers', 
+                images: ['images/newbalance1.png', 'images/newbalance2.png'], 
+                csvKey: 'new balance' 
+            }
+        };
+
+        document.addEventListener("DOMContentLoaded", () => {
+            loadProductDetails();
+        });
+
+        async function loadProductDetails() {
+            const btn = document.getElementById("refreshBtn");
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Analyzing...';
+            btn.disabled = true;
+
+            const selectedKey = document.getElementById("productSelector").value;
+            const config = productConfig[selectedKey];
+
+            document.getElementById("productTitle").innerText = config.name;
+            
+            // Slider'ı (Carousel) Dinamik Doldurma
+            const carouselInner = document.getElementById("carouselInner");
+            const carouselControls = document.getElementById("carouselControls");
+            carouselInner.innerHTML = "";
+            
+            config.images.forEach((imgSrc, index) => {
+                const activeClass = index === 0 ? "active" : "";
+                // Eğer resim bulunamazsa gri bir placeholder gösterilir
+                carouselInner.innerHTML += `
+                    <div class="carousel-item ${activeClass}">
+                        <img src="${imgSrc}" class="d-block w-100 product-image" alt="Product Image" onerror="this.onerror=null; this.src='https://placehold.co/300x250/eeeeee/999999?text=Image+Not+Found'">
+                    </div>
+                `;
+            });
+
+            // Birden fazla resim varsa sağ-sol okları göster
+            if (config.images.length > 1) {
+                carouselControls.style.display = "block";
+            } else {
+                carouselControls.style.display = "none";
+            }
+
+            try {
+                // 1. API: Fiyat ve Manipülasyon Verisi Çek
+                const priceResponse = await fetch('http://127.0.0.1:8000/price-data');
+                const allPriceData = await priceResponse.json();
+                
+                // AI API'sine istek atarak Price Manipulation sayfasındaki AI modelinin sonucunu alıyoruz
+                const aiResponse = await fetch(`http://127.0.0.1:8000/analyze-price?product=${encodeURIComponent(config.name)}&model_type=isolation_forest`);
+                const aiData = await aiResponse.json();
+                const aiAnomalies = aiData.anomalies || [];
+
+                const productPriceData = allPriceData.filter(item => item.product_name === config.name);
+                
+                const alertBox = document.getElementById("aiPriceAlert");
+                const alertIcon = document.getElementById("alertIcon");
+                const alertTitle = document.getElementById("alertTitle");
+                const alertDesc = document.getElementById("alertDesc");
+
+                if (productPriceData.length > 0) {
+                    const latestData = productPriceData[productPriceData.length - 1];
+                    
+                    document.getElementById("productSeller").innerText = latestData.seller;
+                    document.getElementById("currentPrice").innerText = "$" + latestData.actual_price;
+                    
+                    const oldPriceContainer = document.getElementById("oldPriceContainer");
+                    if (latestData.claimed_original_price > latestData.actual_price) {
+                        document.getElementById("oldPrice").innerText = "$" + latestData.claimed_original_price;
+                        oldPriceContainer.style.display = "block";
+                    } else {
+                        oldPriceContainer.style.display = "none";
+                    }
+
+                    // Eğer AI modelimiz bu ürün için bir anomali bulduysa Price Manipulation sayfasıyla birebir tutarlı olarak uyarı göster
+                    if (aiAnomalies.length > 0) {
+                        const anomaly = aiAnomalies[0]; // En son manipülasyon anomalisi
+                        alertBox.className = "p-3 mb-4 rounded ai-alert-box shadow-sm";
+                        alertIcon.className = "me-3 fs-3 text-danger";
+                        alertIcon.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+                        alertTitle.className = "mb-1 fw-bold text-danger";
+                        alertTitle.innerText = "Fake Discount Detected by AI!";
+                        alertDesc.innerText = `Warning: AI models detected a price manipulation campaign for this product (Confidence: ${anomaly.confidence}%). Claimed price was $${anomaly.claimed_price} but actual price was $${anomaly.actual_price}.`;
+                    } else {
+                        alertBox.className = "p-3 mb-4 rounded ai-safe-box shadow-sm";
+                        alertIcon.className = "me-3 fs-3 text-success";
+                        alertIcon.innerHTML = '<i class="fas fa-shield-check"></i>';
+                        alertTitle.className = "mb-1 fw-bold text-success";
+                        alertTitle.innerText = "Price is Safe & Verified";
+                        alertDesc.innerText = "No price manipulation detected by AI models. The discount history appears to be genuine.";
+                    }
+                } else {
+                    // CSV'de ürün bulunamazsa ekranın "statik" (önceki üründe) kalmasını engeller
+                    document.getElementById("productSeller").innerText = "Unknown";
+                    document.getElementById("currentPrice").innerText = "N/A";
+                    document.getElementById("oldPriceContainer").style.display = "none";
+                    
+                    alertBox.className = "p-3 mb-4 rounded bg-light border shadow-sm";
+                    alertIcon.className = "me-3 fs-3 text-secondary";
+                    alertIcon.innerHTML = '<i class="fas fa-info-circle"></i>';
+                    alertTitle.className = "mb-1 fw-bold text-secondary";
+                    alertTitle.innerText = "No Price Data Found";
+                    alertDesc.innerText = "Price history is missing. Please run generate_price_data.py to update the CSV.";
+                }
+
+                // 2. API: NLP Duygu Analizi Çek
+                const nlpResponse = await fetch(`http://127.0.0.1:8000/analyze-csv?limit=30&model_type=nlptown&product=${config.csvKey}`);
+                const nlpData = await nlpResponse.json();
+
+                if (!nlpData.error && nlpData.results) {
+                    const total = nlpData.results.length;
+                    let pos = 0, neg = 0, neu = 0;
+                    
+                    nlpData.results.forEach(r => {
+                        if(r.sentiment === "Positive") pos++;
+                        else if(r.sentiment === "Negative") neg++;
+                        else neu++;
+                    });
+
+                    const posPct = Math.round((pos / total) * 100);
+                    const negPct = Math.round((neg / total) * 100);
+                    const neuPct = 100 - posPct - negPct;
+
+                    document.getElementById("posLabel").innerText = posPct + "% Positive";
+                    document.getElementById("negLabel").innerText = negPct + "% Negative";
+                    
+                    document.getElementById("posBar").style.width = posPct + "%";
+                    document.getElementById("neuBar").style.width = neuPct + "%";
+                    document.getElementById("negBar").style.width = negPct + "%";
+                    
+                    document.getElementById("reviewCountLabel").innerText = `Based on last ${total} verified English reviews`;
+                }
+
+            } catch (error) {
+                console.error("API Error:", error);
+            } finally {
+                btn.innerHTML = '<i class="fas fa-sync-alt me-2"></i>Analyze';
+                btn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,305 @@
+/* Manipulation Campaigns Page Styles */
+
+:root {
+    --color-fake-discount: #4A90E2;
+    --color-limited-stock: #FF9800;
+    --color-bot-activity: #4CAF50;
+    --color-fake-coupon: #E74C3C;
+    --color-price-deception: #9C27B0;
+}
+
+/* Chart Container */
+.chart-container-medium {
+    position: relative;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Legend Container */
+.legend-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding-top: 15px;
+    border-top: 1px solid #E8E8E8;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.legend-label {
+    font-size: 13px;
+    color: var(--color-text);
+    font-weight: 500;
+}
+
+/* Campaigns Table */
+.table-responsive {
+    overflow-x: auto;
+}
+
+.campaigns-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.campaigns-table thead {
+    background-color: #F8F9FA;
+}
+
+.campaigns-table th {
+    padding: 15px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-text);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #E8E8E8;
+}
+
+.campaigns-table tbody tr {
+    border-bottom: 1px solid #F0F0F0;
+    transition: background-color 0.2s;
+}
+
+.campaigns-table tbody tr:hover {
+    background-color: #FAFAFA;
+}
+
+.campaigns-table td {
+    padding: 15px;
+    vertical-align: middle;
+}
+
+/* Campaign Badges */
+.campaign-badge {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.campaign-badge.urgent {
+    background-color: rgba(255, 87, 34, 0.1);
+    color: #FF5722;
+    border: 1px solid rgba(255, 87, 34, 0.3);
+}
+
+.campaign-badge.warning {
+    background-color: rgba(255, 152, 0, 0.1);
+    color: #FF9800;
+    border: 1px solid rgba(255, 152, 0, 0.3);
+}
+
+.campaign-badge.danger {
+    background-color: rgba(244, 67, 54, 0.1);
+    color: #F44336;
+    border: 1px solid rgba(244, 67, 54, 0.3);
+}
+
+.campaign-badge.sale {
+    background-color: rgba(233, 30, 99, 0.1);
+    color: #E91E63;
+    border: 1px solid rgba(233, 30, 99, 0.3);
+}
+
+.campaign-badge.coupon {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: #4CAF50;
+    border: 1px solid rgba(76, 175, 80, 0.3);
+}
+
+/* Type Badges */
+.type-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.type-badge.fake-discount {
+    background-color: rgba(74, 144, 226, 0.15);
+    color: var(--color-fake-discount);
+}
+
+.type-badge.limited-stock {
+    background-color: rgba(255, 152, 0, 0.15);
+    color: var(--color-limited-stock);
+}
+
+.type-badge.price-deception {
+    background-color: rgba(156, 39, 176, 0.15);
+    color: var(--color-price-deception);
+}
+
+.type-badge.fake-coupon {
+    background-color: rgba(231, 76, 60, 0.15);
+    color: var(--color-fake-coupon);
+}
+
+/* Confidence Cell */
+.confidence-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 150px;
+}
+
+.confidence-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-primary);
+    min-width: 40px;
+}
+
+.confidence-bar {
+    flex: 1;
+    height: 8px;
+    background-color: #E8E8E8;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.confidence-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4ECDC4 0%, #44A08D 100%);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+/* Info Cards */
+.info-card {
+    background: var(--color-white);
+    border: 1px solid #E8E8E8;
+    border-radius: var(--border-radius);
+    padding: 25px 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: all 0.3s;
+}
+
+.info-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.info-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+}
+
+.info-content h4 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin: 0;
+}
+
+.info-content p {
+    font-size: 13px;
+    color: var(--color-text-light);
+    margin: 5px 0 0 0;
+    font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .legend-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .campaigns-table {
+        font-size: 13px;
+    }
+    
+    .campaigns-table th,
+    .campaigns-table td {
+        padding: 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    .chart-container-medium {
+        height: 250px;
+    }
+    
+    .campaign-badge {
+        font-size: 11px;
+        padding: 6px 10px;
+    }
+    
+    .type-badge {
+        font-size: 11px;
+        padding: 5px 10px;
+    }
+    
+    .confidence-cell {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .confidence-bar {
+        width: 100%;
+    }
+    
+    .info-content h4 {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 576px) {
+    .campaigns-table thead {
+        display: none;
+    }
+    
+    .campaigns-table tbody tr {
+        display: block;
+        margin-bottom: 15px;
+        border: 1px solid #E8E8E8;
+        border-radius: 8px;
+        padding: 10px;
+    }
+    
+    .campaigns-table td {
+        display: block;
+        padding: 8px 0;
+        text-align: left;
+        border: none;
+    }
+    
+    .campaigns-table td:before {
+        content: attr(data-label);
+        font-weight: 600;
+        display: block;
+        margin-bottom: 5px;
+        font-size: 12px;
+        color: var(--color-text-light);
+    }
+}
+
