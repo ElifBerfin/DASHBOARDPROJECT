@@ -87,4 +87,4 @@ for batch in train_loader:
 
 # 5. MODELİ KAYDET
 torch.save(model.state_dict(), "lstm_model.pth")
-print("Model başarıyla eğitildi ve 'lstm_model.pth' olarak kaydedildi! 🎉")
+print("Model basariyla egitildi ve 'lstm_model.pth' olarak kaydedildi!")

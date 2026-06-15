@@ -15,3 +15,29 @@ myenv/
 results_*/
 checkpoint*/
 runs/
+
+# Databases
+*.db
+
+# Fine-tuned Models (too large for GitHub)
+fine_tuned_bert/
+fine_tuned_roberta/
+fine_tuned_price_bert/
+fine_tuned_price_bert_v2/
+model_*/
+bert_ayakkabi_modeli/
+
+# Documents
+*.pdf
+*.doc
+*.docx
+
+# Temp Files
+*.tmp
+~$*
+
+# Scratch Scripts
+check_db.py
+check_reviews.py
+test_predictions.py
+test_app_predict.py

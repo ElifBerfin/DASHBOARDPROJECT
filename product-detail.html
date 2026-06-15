@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Detail Dashboard</title>
+    <title>360° Product Detail Analysis</title>
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -11,161 +11,468 @@
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        .product-image-container {
-            background-color: #f8f9fa;
-            border-radius: 10px;
-            text-align: center;
-            padding: 20px;
-            height: 100%;
+        body {
+            font-family: 'Outfit', -apple-system, sans-serif;
+            background-color: #f6f8fb;
+            color: #333333;
+            min-height: 100vh;
+        }
+
+        /* Top Navbar matching the design */
+        .navbar {
+            background-color: #ffffff !important;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 12px 24px;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: #1e293b !important;
             display: flex;
             align-items: center;
+        }
+
+        .nav-link {
+            color: #475569 !important;
+            font-weight: 500;
+            padding: 8px 16px !important;
+            margin: 0 4px;
+            border-radius: 8px;
+        }
+
+        .nav-link.active-tab {
+            background-color: #54bab9 !important;
+            color: #ffffff !important;
+            border-radius: 8px;
+        }
+
+        /* Title card */
+        .dashboard-header-card {
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 16px 24px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .dashboard-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin: 0;
+        }
+
+        .form-select {
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 8px 16px;
+            color: #334155;
+            background-color: #ffffff;
+            height: 42px;
+        }
+
+        .btn-analyze {
+            background-color: #2563eb;
+            color: #ffffff;
+            font-weight: 500;
+            border: none;
+            border-radius: 8px;
+            height: 42px;
+            padding: 0 20px;
+            display: inline-flex;
+            align-items: center;
             justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-analyze:hover {
+            background-color: #1d4ed8;
+            color: #ffffff;
+        }
+
+        /* Main Details Container Card */
+        .product-card {
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        /* Image Carousel Box matching user screenshot */
+        .image-carousel-box {
+            background-color: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 340px;
             position: relative;
         }
+
+        .carousel-arrow {
+            font-size: 1.5rem;
+            color: #94a3b8;
+            cursor: pointer;
+            transition: color 0.2s;
+            background: none;
+            border: none;
+        }
+
+        .carousel-arrow:hover {
+            color: #475569;
+        }
+
         .product-image {
-            max-height: 250px;
-            max-width: 100%;
+            max-height: 280px;
+            max-width: 80%;
             object-fit: contain;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            margin: 0 auto;
+            opacity: 0;
+            transition: opacity 0.3s ease, filter 0.3s ease;
+            filter: blur(5px);
         }
-        .carousel-control-prev-icon,
-        .carousel-control-next-icon {
-            filter: invert(100%); /* Beyaz olan okları siyah yapar */
+
+        .product-image.loaded {
+            opacity: 1;
+            filter: blur(0);
         }
-        .sentiment-bar {
-            height: 12px;
+
+        .skeleton-loader {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+            background-size: 200% 100%;
+            animation: skeletonLoading 1.5s infinite;
+            border-radius: 12px;
+            z-index: 1;
+            display: none;
+        }
+
+        @keyframes skeletonLoading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Product details styling */
+        .product-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 6px;
+        }
+
+        .seller-info {
+            font-size: 0.95rem;
+            color: #475569;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .seller-info i {
+            color: #64748b;
+        }
+
+        /* Red Warning Alert block matching screenshot */
+        .warning-alert-box {
+            background-color: #fff5f5;
+            border-left: 4px solid #ef4444;
+            border-radius: 6px;
+            padding: 16px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .warning-alert-icon {
+            color: #ef4444;
+            font-size: 1.3rem;
+            margin-top: 2px;
+        }
+
+        .warning-alert-title {
+            color: #b91c1c;
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+        }
+
+        .warning-alert-desc {
+            color: #7f1d1d;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* Soft green box when price is safe */
+        .safe-alert-box {
+            background-color: #f0fdf4;
+            border-left: 4px solid #10b981;
+            border-radius: 6px;
+            padding: 16px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .safe-alert-icon {
+            color: #10b981;
+            font-size: 1.3rem;
+            margin-top: 2px;
+        }
+
+        .safe-alert-title {
+            color: #047857;
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+        }
+
+        .safe-alert-desc {
+            color: #064e3b;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* Bottom stats blocks matching screenshot */
+        .stat-block {
+            background-color: #f8fafc;
+            border: 1px solid #e5e7eb;
             border-radius: 10px;
+            padding: 20px;
+            height: 100%;
         }
-        .ai-alert-box {
-            border-left: 5px solid #dc3545;
-            background-color: #fff8f8;
+
+        .stat-block-title {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-bottom: 12px;
         }
-        .ai-safe-box {
-            border-left: 5px solid #198754;
-            background-color: #f4fdf8;
+
+        .stat-block-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 0;
+        }
+
+        /* Sentiment ratings progress bar matching original UI */
+        .sentiment-score-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .sentiment-score-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .sentiment-score-item.pos { color: #10b981; }
+        .sentiment-score-item.neg { color: #ef4444; }
+
+        .sentiment-progress {
+            height: 8px;
+            background-color: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .sentiment-progress-bar-pos { background-color: #10b981; height: 100%; }
+        .sentiment-progress-bar-neg { background-color: #ef4444; height: 100%; }
+
+        .sentiment-caption {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        /* Submit Review Form Card */
+        .form-card {
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .form-control, .form-select {
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 10px 16px;
+            color: #334155;
+            background-color: #ffffff;
         }
     </style>
 </head>
 <body>
-    <!-- Navigation Menu -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <!-- Top Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
         <div class="container-fluid">
-            <a class="navbar-brand fw-bold" href="#">
-                <i class="fas fa-chart-line me-2"></i>Analytics Platform
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-chart-line"></i> Analytics Platform
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-smile me-1"></i>Sentiment Analysis</a></li>
                     <li class="nav-item"><a class="nav-link" href="price-manipulation.html"><i class="fas fa-exclamation-triangle me-1"></i>Price Manipulation</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="product-detail.html"><i class="fas fa-box me-1"></i>Product Detail</a></li>
+                    <li class="nav-item"><a class="nav-link active-tab" href="product-detail.html"><i class="fas fa-box me-1"></i>Product Detail</a></li>
                     <li class="nav-item"><a class="nav-link" href="manipulation-campaigns.html"><i class="fas fa-bullseye me-1"></i>Campaigns</a></li>
+                    <li class="nav-item"><a class="nav-link text-indigo-600" href="admin.html"><i class="fas fa-user-shield me-1"></i>Admin Panel</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <div class="container p-4">
-        <!-- Header & Product Selector -->
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="dashboard-title m-0">360° Product Analysis</h2>
+    <div class="container-fluid p-4">
+        <!-- Header & Dropdown selector banner -->
+        <div class="dashboard-header-card shadow-sm">
+            <h2 class="dashboard-title">360° Product Analysis</h2>
             <div class="d-flex gap-2">
-                <select class="form-select shadow-sm font-monospace" id="productSelector" onchange="loadProductDetails()" style="min-width: 250px;">
-                    <option value="samsung">Samsung Galaxy S23 Ultra</option>
-                    <option value="apple">Apple iPhone 14 Pro Max</option>
-                    <option value="tarte">Tarte Shape Tape Concealer</option>
-                    <option value="oysho">Oysho Women's Compression Leggings</option>
-                    <option value="adidas">Adidas Running Shoes</option>
-                    <option value="newbalance">New Balance Sneakers</option>
+                <select class="form-select" id="storeSelector" onchange="loadProductDetails()" style="min-width: 150px;">
+                    <option value="">All Stores</option>
+                    <option value="Amazon">Amazon</option>
+                    <option value="Trendyol">Trendyol</option>
+                    <option value="Hepsiburada">Hepsiburada</option>
+                    <option value="MediaMarkt">MediaMarkt</option>
+                    <option value="Watsons">Watsons</option>
+                    <option value="Gratis">Gratis</option>
                 </select>
-                <button class="btn btn-primary shadow-sm text-nowrap" id="refreshBtn" onclick="loadProductDetails()">
-                    <i class="fas fa-sync-alt me-2"></i>Analyze
+                <select class="form-select" id="productSelector" onchange="loadProductDetails()" style="min-width: 250px;">
+                    <!-- Loaded dynamically -->
+                </select>
+                <button class="btn btn-analyze" id="refreshBtn" onclick="loadProductDetails()">
+                    <i class="fas fa-sync-alt"></i> Analyze
                 </button>
             </div>
         </div>
 
-        <!-- Main Product Card -->
-        <div class="card shadow-sm border-0 mb-4">
-            <div class="card-body p-4">
-                <div class="row">
-                    <!-- Left Col: Image Carousel -->
-                    <div class="col-md-4 mb-3 mb-md-0">
-                        <div class="product-image-container">
-                            <!-- Slider Başlangıcı -->
-                            <div id="productImageCarousel" class="carousel slide w-100" data-bs-ride="carousel">
-                                <div class="carousel-inner" id="carouselInner">
-                                    <!-- Images injected via JS -->
-                                </div>
-                                <div id="carouselControls">
-                                    <button class="carousel-control-prev" type="button" data-bs-target="#productImageCarousel" data-bs-slide="prev">
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Previous</span>
-                                    </button>
-                                    <button class="carousel-control-next" type="button" data-bs-target="#productImageCarousel" data-bs-slide="next">
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Next</span>
-                                    </button>
-                                </div>
-                            </div>
-                            <!-- Slider Bitişi -->
+        <div id="errorMessage" class="alert alert-danger d-none mb-4 shadow-sm border-0 rounded-3"></div>
+
+        <!-- Main Product Card matching screenshot design -->
+        <div class="card product-card shadow-sm">
+            <div class="row g-4">
+                <!-- Left: Product Image Carousel -->
+                <div class="col-md-5">
+                    <div class="image-carousel-box" id="carouselContainer">
+                        <div class="skeleton-loader" id="imgSkeleton"></div>
+                        <button class="carousel-arrow" onclick="prevImage()"><i class="fas fa-chevron-left"></i></button>
+                        <img src="" class="product-image" id="productDetailImage" alt="product" onload="imageLoaded()" onerror="imageError()">
+                        <button class="carousel-arrow" onclick="nextImage()"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- Right: Product details, alerts, and stats blocks -->
+                <div class="col-md-7">
+                    <h3 class="product-name" id="productTitle">Loading Product...</h3>
+                    <div class="seller-info" id="productSellerInfo">
+                        <i class="fas fa-store"></i> Seller: <strong class="text-dark" id="productSellerName">...</strong>
+                    </div>
+
+                    <!-- Red Warning Alert box matching screenshot -->
+                    <div id="warningAlertBox" class="warning-alert-box" style="display: none;">
+                        <i class="fas fa-exclamation-triangle warning-alert-icon"></i>
+                        <div>
+                            <div class="warning-alert-title">Fake Discount Detected by AI!</div>
+                            <p class="warning-alert-desc" id="warningAlertText">Warning: AI models detected a price manipulation campaign for this product (Confidence: 60.9%). Claimed price was $2400 but actual price was $1800.</p>
                         </div>
                     </div>
-                    
-                    <!-- Right Col: Details -->
-                    <div class="col-md-8">
-                        <h3 id="productTitle" class="fw-bold text-dark mb-1">...</h3>
-                        <p class="text-muted mb-3"><i class="fas fa-store me-2"></i>Seller: <span id="productSeller" class="fw-bold text-dark">...</span></p>
-                        
-                        <!-- AI Price Manipulation Status -->
-                        <div id="aiPriceAlert" class="p-3 mb-4 rounded ai-safe-box shadow-sm">
-                            <div class="d-flex align-items-center">
-                                <div id="alertIcon" class="me-3 fs-3 text-success"><i class="fas fa-shield-check"></i></div>
-                                <div>
-                                    <h6 id="alertTitle" class="mb-1 fw-bold text-success">Verifying Price...</h6>
-                                    <small id="alertDesc" class="text-muted">AI is analyzing price history.</small>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="row g-3">
-                            <!-- Price Info -->
-                            <div class="col-sm-6">
-                                <div class="p-3 border rounded bg-light h-100">
-                                    <h6 class="text-muted mb-2">Current Price</h6>
-                                    <h3 class="text-dark fw-bold m-0" id="currentPrice">...</h3>
-                                    <div id="oldPriceContainer" class="mt-1" style="display:none;">
-                                        <small class="text-muted">Claimed Old Price: <del class="text-danger" id="oldPrice">...</del></small>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Sentiment Info -->
-                            <div class="col-sm-6">
-                                <div class="p-3 border rounded bg-light h-100">
-                                    <h6 class="text-muted mb-2">NLP Sentiment Score</h6>
-                                    <div class="d-flex justify-content-between mb-1">
-                                        <small class="text-success fw-bold"><i class="fas fa-smile me-1"></i><span id="posLabel">0%</span></small>
-                                        <small class="text-danger fw-bold"><i class="fas fa-frown me-1"></i><span id="negLabel">0%</span></small>
-                                    </div>
-                                    <div class="progress sentiment-bar">
-                                        <div id="posBar" class="progress-bar bg-success" role="progressbar" style="width: 0%"></div>
-                                        <div id="neuBar" class="progress-bar bg-secondary opacity-50" role="progressbar" style="width: 100%"></div>
-                                        <div id="negBar" class="progress-bar bg-danger" role="progressbar" style="width: 0%"></div>
-                                    </div>
-                                    <div class="mt-2 text-center">
-                                        <small class="text-muted" id="reviewCountLabel">Analyzing reviews...</small>
-                                    </div>
-                                </div>
-                            </div>
+                    <!-- Soft green alert box when safe -->
+                    <div id="safeAlertBox" class="safe-alert-box">
+                        <i class="fas fa-check-circle safe-alert-icon"></i>
+                        <div>
+                            <div class="safe-alert-title">Pricing Details Confirmed & Verified</div>
+                            <p class="safe-alert-desc">No fake campaigns or suni pricing anomalies detected for this product. </p>
                         </div>
-
                     </div>
+
+                    <!-- Bottom stats blocks matching screenshot -->
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <div class="stat-block">
+                                <div class="stat-block-title">Current Price</div>
+                                <div class="stat-block-value" id="currentPriceVal">$--</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="stat-block">
+                                <div class="stat-block-title">NLP Sentiment Score</div>
+                                <div class="sentiment-score-row">
+                                    <div class="sentiment-score-item pos">
+                                        <i class="far fa-smile"></i> <span id="posPercentText">30% Positive</span>
+                                    </div>
+                                    <div class="sentiment-score-item neg">
+                                        <i class="far fa-frown"></i> <span id="negPercentText">47% Negative</span>
+                                    </div>
+                                </div>
+                                <div class="progress sentiment-progress">
+                                    <div id="posProgress" class="progress-bar bg-success" role="progressbar" style="width: 30%"></div>
+                                    <div id="neuProgress" class="progress-bar bg-secondary" role="progressbar" style="width: 23%"></div>
+                                    <div id="negProgress" class="progress-bar bg-danger" role="progressbar" style="width: 47%"></div>
+                                </div>
+                                <div class="sentiment-caption" id="sentimentCaptionText">
+                                    Based on last 30 verified English reviews
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Review section -->
+        <div class="card form-card shadow-sm">
+            <h5 class="fw-bold mb-3"><i class="fas fa-edit text-primary me-2"></i>Submit Product Review</h5>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label text-secondary fw-semibold">Author Name</label>
+                    <input type="text" class="form-control" id="revName" required placeholder="e.g. John Doe">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label text-secondary fw-semibold">Review Title</label>
+                    <input type="text" class="form-control" id="revTitle" required placeholder="e.g. Recommended">
+                </div>
+                <div class="col-12">
+                    <label class="form-label text-secondary fw-semibold">Rating Score (1-5 Stars)</label>
+                    <select class="form-select" id="revRating">
+                        <option value="5" selected>5 Stars</option>
+                        <option value="4">4 Stars</option>
+                        <option value="3">3 Stars</option>
+                        <option value="2">2 Stars</option>
+                        <option value="1">1 Star</option>
+                    </select>
+                </div>
+                <div class="col-12">
+                    <label class="form-label text-secondary fw-semibold">Review Text</label>
+                    <textarea class="form-control" id="revText" rows="4" required placeholder="Write review comments..."></textarea>
+                </div>
+                <div class="col-12 text-end">
+                    <button class="btn btn-analyze px-4 py-2" id="submitReviewBtn" onclick="submitReview()">
+                        <i class="fas fa-paper-plane me-2"></i>Submit & Run AI Sentiment
+                    </button>
                 </div>
             </div>
         </div>
@@ -175,171 +482,208 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        // Ürün veritabanı ve çoklu resim (Carousel) eşleştirmesi
-        const productConfig = {
-            'samsung': { 
-                name: 'Samsung Galaxy S23 Ultra', 
-                images: ['images/samsung1.png', 'images/samsung2.png'], 
-                csvKey: 'samsung' 
-            },
-            'apple': { 
-                name: 'Apple iPhone 14 Pro Max', 
-                images: ['images/apple1.png', 'images/apple2.png'], 
-                csvKey: 'apple' 
-            },
-            'tarte': { 
-                name: 'Tarte Shape Tape Concealer', 
-                images: ['images/tarte1.png', 'images/tarte2.png'], 
-                csvKey: 'tarte' 
-            },
-            'oysho': { 
-                name: 'Oysho Women\'s Compression Leggings', 
-                images: ['images/oysho1.png', 'images/oysho2.png'], 
-                csvKey: 'oysho' 
-            },
-            'adidas': { 
-                name: 'Adidas Running Shoes', 
-                images: ['images/adidas1.png', 'images/adidas2.png'], 
-                csvKey: 'adidas' 
-            },
-            'newbalance': { 
-                name: 'New Balance Sneakers', 
-                images: ['images/newbalance1.png', 'images/newbalance2.png'], 
-                csvKey: 'new balance' 
-            }
-        };
+        const API_URL = "http://127.0.0.1:8000";
+        let currentImageIndex = 0;
+        let productImages = [];
 
-        document.addEventListener("DOMContentLoaded", () => {
+        document.addEventListener("DOMContentLoaded", async () => {
+            await loadProducts();
             loadProductDetails();
         });
 
+        async function loadProducts() {
+            try {
+                const res = await fetch(`${API_URL}/api/products`);
+                const products = await res.json();
+                
+                const select = document.getElementById("productSelector");
+                select.innerHTML = "";
+                
+                products.forEach((p, idx) => {
+                    select.innerHTML += `<option value="${p.id}" ${idx === 0 ? "selected" : ""}>${p.name}</option>`;
+                });
+            } catch (error) {
+                showError("Could not load product list.");
+            }
+        }
+
         async function loadProductDetails() {
             const btn = document.getElementById("refreshBtn");
+            const product_id = document.getElementById("productSelector").value;
+            const store = document.getElementById("storeSelector").value;
+            
+            if (!product_id) return;
+
             btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Analyzing...';
             btn.disabled = true;
-
-            const selectedKey = document.getElementById("productSelector").value;
-            const config = productConfig[selectedKey];
-
-            document.getElementById("productTitle").innerText = config.name;
-            
-            // Slider'ı (Carousel) Dinamik Doldurma
-            const carouselInner = document.getElementById("carouselInner");
-            const carouselControls = document.getElementById("carouselControls");
-            carouselInner.innerHTML = "";
-            
-            config.images.forEach((imgSrc, index) => {
-                const activeClass = index === 0 ? "active" : "";
-                // Eğer resim bulunamazsa gri bir placeholder gösterilir
-                carouselInner.innerHTML += `
-                    <div class="carousel-item ${activeClass}">
-                        <img src="${imgSrc}" class="d-block w-100 product-image" alt="Product Image" onerror="this.onerror=null; this.src='https://placehold.co/300x250/eeeeee/999999?text=Image+Not+Found'">
-                    </div>
-                `;
-            });
-
-            // Birden fazla resim varsa sağ-sol okları göster
-            if (config.images.length > 1) {
-                carouselControls.style.display = "block";
-            } else {
-                carouselControls.style.display = "none";
-            }
+            hideError();
 
             try {
-                // 1. API: Fiyat ve Manipülasyon Verisi Çek
-                const priceResponse = await fetch('http://127.0.0.1:8000/price-data');
-                const allPriceData = await priceResponse.json();
+                // Fetch pricing anomalies
+                let priceUrl = `${API_URL}/api/analyze-price?product_id=${product_id}`;
+                if (store) priceUrl += `&store=${encodeURIComponent(store)}`;
                 
-                // AI API'sine istek atarak Price Manipulation sayfasındaki AI modelinin sonucunu alıyoruz
-                const aiResponse = await fetch(`http://127.0.0.1:8000/analyze-price?product=${encodeURIComponent(config.name)}&model_type=isolation_forest`);
-                const aiData = await aiResponse.json();
-                const aiAnomalies = aiData.anomalies || [];
-
-                const productPriceData = allPriceData.filter(item => item.product_name === config.name);
+                const resPrice = await fetch(priceUrl);
+                const dataPrice = await resPrice.json();
                 
-                const alertBox = document.getElementById("aiPriceAlert");
-                const alertIcon = document.getElementById("alertIcon");
-                const alertTitle = document.getElementById("alertTitle");
-                const alertDesc = document.getElementById("alertDesc");
+                const productsRes = await fetch(`${API_URL}/api/products`);
+                const products = await productsRes.json();
+                const currentProduct = products.find(p => p.id == product_id);
 
-                if (productPriceData.length > 0) {
-                    const latestData = productPriceData[productPriceData.length - 1];
+                if (currentProduct) {
+                    document.getElementById("productTitle").innerText = currentProduct.name;
+                    document.getElementById("productSellerName").innerText = store ? store : (dataPrice.stats && dataPrice.stats.best_seller ? dataPrice.stats.best_seller : "Multiple Stores");
                     
-                    document.getElementById("productSeller").innerText = latestData.seller;
-                    document.getElementById("currentPrice").innerText = "$" + latestData.actual_price;
-                    
-                    const oldPriceContainer = document.getElementById("oldPriceContainer");
-                    if (latestData.claimed_original_price > latestData.actual_price) {
-                        document.getElementById("oldPrice").innerText = "$" + latestData.claimed_original_price;
-                        oldPriceContainer.style.display = "block";
-                    } else {
-                        oldPriceContainer.style.display = "none";
-                    }
-
-                    // Eğer AI modelimiz bu ürün için bir anomali bulduysa Price Manipulation sayfasıyla birebir tutarlı olarak uyarı göster
-                    if (aiAnomalies.length > 0) {
-                        const anomaly = aiAnomalies[0]; // En son manipülasyon anomalisi
-                        alertBox.className = "p-3 mb-4 rounded ai-alert-box shadow-sm";
-                        alertIcon.className = "me-3 fs-3 text-danger";
-                        alertIcon.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
-                        alertTitle.className = "mb-1 fw-bold text-danger";
-                        alertTitle.innerText = "Fake Discount Detected by AI!";
-                        alertDesc.innerText = `Warning: AI models detected a price manipulation campaign for this product (Confidence: ${anomaly.confidence}%). Claimed price was $${anomaly.claimed_price} but actual price was $${anomaly.actual_price}.`;
-                    } else {
-                        alertBox.className = "p-3 mb-4 rounded ai-safe-box shadow-sm";
-                        alertIcon.className = "me-3 fs-3 text-success";
-                        alertIcon.innerHTML = '<i class="fas fa-shield-check"></i>';
-                        alertTitle.className = "mb-1 fw-bold text-success";
-                        alertTitle.innerText = "Price is Safe & Verified";
-                        alertDesc.innerText = "No price manipulation detected by AI models. The discount history appears to be genuine.";
-                    }
-                } else {
-                    // CSV'de ürün bulunamazsa ekranın "statik" (önceki üründe) kalmasını engeller
-                    document.getElementById("productSeller").innerText = "Unknown";
-                    document.getElementById("currentPrice").innerText = "N/A";
-                    document.getElementById("oldPriceContainer").style.display = "none";
-                    
-                    alertBox.className = "p-3 mb-4 rounded bg-light border shadow-sm";
-                    alertIcon.className = "me-3 fs-3 text-secondary";
-                    alertIcon.innerHTML = '<i class="fas fa-info-circle"></i>';
-                    alertTitle.className = "mb-1 fw-bold text-secondary";
-                    alertTitle.innerText = "No Price Data Found";
-                    alertDesc.innerText = "Price history is missing. Please run generate_price_data.py to update the CSV.";
+                    productImages = currentProduct.image_url.split(',');
+                    currentImageIndex = 0;
+                    setImage(productImages[currentImageIndex]);
                 }
 
-                // 2. API: NLP Duygu Analizi Çek
-                const nlpResponse = await fetch(`http://127.0.0.1:8000/analyze-csv?limit=30&model_type=nlptown&product=${config.csvKey}`);
-                const nlpData = await nlpResponse.json();
+                // Render alerts based on price manipulation stats
+                const warningBox = document.getElementById("warningAlertBox");
+                const safeBox = document.getElementById("safeAlertBox");
+                
+                if (dataPrice.stats && dataPrice.stats.best_price) {
+                    document.getElementById("currentPriceVal").innerText = `$${dataPrice.stats.best_price}`;
+                } else {
+                    document.getElementById("currentPriceVal").innerText = "N/A";
+                }
 
-                if (!nlpData.error && nlpData.results) {
-                    const total = nlpData.results.length;
-                    let pos = 0, neg = 0, neu = 0;
+                if (dataPrice.stats && dataPrice.stats.is_manipulated === 1 && dataPrice.anomalies && dataPrice.anomalies.length > 0) {
+                    warningBox.style.display = "flex";
+                    safeBox.style.display = "none";
                     
-                    nlpData.results.forEach(r => {
-                        if(r.sentiment === "Positive") pos++;
-                        else if(r.sentiment === "Negative") neg++;
-                        else neu++;
+                    const firstAnomaly = dataPrice.anomalies[0];
+                    document.getElementById("warningAlertText").innerText = `Warning: AI models detected a price manipulation campaign for this product (Confidence: ${firstAnomaly.confidence}%). Claimed price was $${firstAnomaly.claimed_price} but actual price was $${firstAnomaly.actual_price}.`;
+                } else {
+                    warningBox.style.display = "none";
+                    safeBox.style.display = "flex";
+                }
+
+                // Fetch sentiment distribution
+                let sentimentUrl = `${API_URL}/analyze-csv?limit=500&model_type=bert&product=${encodeURIComponent(currentProduct.name)}`;
+                if (store) sentimentUrl += `&store=${encodeURIComponent(store)}`;
+                
+                const statsRes = await fetch(sentimentUrl);
+                const statsData = await statsRes.json();
+
+                if (statsData.results && statsData.results.length > 0) {
+                    const total = statsData.results.length;
+                    let pos = 0, neg = 0;
+                    statsData.results.forEach(item => {
+                        if (item.sentiment === "Positive") pos++;
+                        else if (item.sentiment === "Negative") neg++;
                     });
 
-                    const posPct = Math.round((pos / total) * 100);
-                    const negPct = Math.round((neg / total) * 100);
-                    const neuPct = 100 - posPct - negPct;
+                    const posPercent = Math.round((pos / total) * 100);
+                    const negPercent = Math.round((neg / total) * 100);
+                    const neuPercent = 100 - posPercent - negPercent;
 
-                    document.getElementById("posLabel").innerText = posPct + "% Positive";
-                    document.getElementById("negLabel").innerText = negPct + "% Negative";
-                    
-                    document.getElementById("posBar").style.width = posPct + "%";
-                    document.getElementById("neuBar").style.width = neuPct + "%";
-                    document.getElementById("negBar").style.width = negPct + "%";
-                    
-                    document.getElementById("reviewCountLabel").innerText = `Based on last ${total} verified English reviews`;
+                    document.getElementById("posPercentText").innerText = `${posPercent}% Positive`;
+                    document.getElementById("negPercentText").innerText = `${negPercent}% Negative`;
+
+                    document.getElementById("posProgress").style.width = posPercent + "%";
+                    document.getElementById("neuProgress").style.width = neuPercent + "%";
+                    document.getElementById("negProgress").style.width = negPercent + "%";
+
+                    document.getElementById("sentimentCaptionText").innerText = `Based on last ${total} verified English reviews`;
                 }
 
             } catch (error) {
-                console.error("API Error:", error);
+                showError("Failed to fetch product details.");
             } finally {
-                btn.innerHTML = '<i class="fas fa-sync-alt me-2"></i>Analyze';
+                btn.innerHTML = '<i class="fas fa-sync-alt"></i> Analyze';
                 btn.disabled = false;
+            }
+        }
+
+        async function submitReview() {
+            const pid = document.getElementById("productSelector").value;
+            const reviewer_name = document.getElementById("revName").value;
+            const review_title = document.getElementById("revTitle").value;
+            const review_rating = parseInt(document.getElementById("revRating").value);
+            const review_text = document.getElementById("revText").value;
+
+            if (!reviewer_name || !review_title || !review_text) {
+                alert("Please fill out all fields!");
+                return;
+            }
+
+            const btn = document.getElementById("submitReviewBtn");
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Analyzing...';
+            btn.disabled = true;
+
+            const reviewData = { reviewer_name, review_title, review_text, review_rating };
+
+            try {
+                const res = await fetch(`${API_URL}/api/products/${pid}/reviews`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(reviewData)
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    alert(`Review submitted successfully! Live Sentiment predicted by BERT model: ${data.sentiment}`);
+                    
+                    // Reset fields
+                    document.getElementById("revName").value = "";
+                    document.getElementById("revTitle").value = "";
+                    document.getElementById("revText").value = "";
+                    
+                    loadProductDetails();
+                } else {
+                    alert("Could not submit review.");
+                }
+            } catch (error) {
+                alert("Server connection error.");
+            } finally {
+                btn.innerHTML = '<i class="fas fa-paper-plane me-2"></i>Submit & Run AI Sentiment';
+                btn.disabled = false;
+            }
+        }
+
+        function showError(msg) {
+            const errorMsg = document.getElementById("errorMessage");
+            errorMsg.innerText = msg;
+            errorMsg.classList.remove("d-none");
+        }
+
+        function hideError() {
+            document.getElementById("errorMessage").classList.add("d-none");
+        }
+
+        function setImage(src) {
+            const img = document.getElementById("productDetailImage");
+            const skeleton = document.getElementById("imgSkeleton");
+            img.classList.remove("loaded");
+            skeleton.style.display = "block";
+            img.src = src;
+        }
+
+        function imageLoaded() {
+            document.getElementById("imgSkeleton").style.display = "none";
+            document.getElementById("productDetailImage").classList.add("loaded");
+        }
+
+        function imageError() {
+            const img = document.getElementById("productDetailImage");
+            document.getElementById("imgSkeleton").style.display = "none";
+            img.src = 'https://placehold.co/300x250/eeeeee/999999?text=No+Image';
+            img.classList.add("loaded");
+        }
+
+        function nextImage() {
+            if (productImages.length > 1) {
+                currentImageIndex = (currentImageIndex + 1) % productImages.length;
+                setImage(productImages[currentImageIndex]);
+            }
+        }
+
+        function prevImage() {
+            if (productImages.length > 1) {
+                currentImageIndex = (currentImageIndex - 1 + productImages.length) % productImages.length;
+                setImage(productImages[currentImageIndex]);
             }
         }
     </script>

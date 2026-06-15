@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,472 +11,715 @@
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/price-manipulation.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Outfit', -apple-system, sans-serif;
+            background-color: #f6f8fb;
+            color: #333333;
+            min-height: 100vh;
+        }
+
+        .toggle-arrow {
+            transition: transform 0.3s ease;
+        }
+        .table-header-row.collapsed .toggle-arrow {
+            transform: rotate(-90deg);
+        }
+
+        /* Top Navbar matching the design */
+        .navbar {
+            background-color: #ffffff !important;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 12px 24px;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: #1e293b !important;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #475569 !important;
+            font-weight: 500;
+            padding: 8px 16px !important;
+            margin: 0 4px;
+            border-radius: 8px;
+        }
+
+        .nav-link.active-tab {
+            background-color: #54bab9 !important;
+            color: #ffffff !important;
+            border-radius: 8px;
+        }
+
+        /* Top dashboard banner card */
+        .dashboard-header-card {
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 16px 24px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .dashboard-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin: 0;
+        }
+
+        .form-select {
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 8px 16px;
+            color: #334155;
+            background-color: #ffffff;
+            height: 42px;
+        }
+
+        .btn-refresh {
+            background-color: #2e7d32;
+            color: #ffffff;
+            font-weight: 500;
+            border: none;
+            border-radius: 8px;
+            height: 42px;
+            padding: 0 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background-color 0.2s;
+        }
+
+        .btn-refresh:hover {
+            background-color: #1b5e20;
+            color: #ffffff;
+        }
+
+        /* Megaphone/Inflation/Sellers/Tag KPI cards matching original UI */
+        .kpi-card {
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        .kpi-icon-container {
+            width: 52px;
+            height: 52px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin-right: 16px;
+            flex-shrink: 0;
+        }
+
+        .kpi-icon-container.anomalies { background-color: #fff4e5; color: #ff9800; }
+        .kpi-icon-container.inflation { background-color: #fbe9e7; color: #ff5722; }
+        .kpi-icon-container.sellers { background-color: #efebe9; color: #795548; }
+        .kpi-icon-container.rate { background-color: #fce4ec; color: #e91e63; }
+
+        .kpi-val {
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.1;
+        }
+
+        .kpi-val.anomalies { color: #e65100; }
+        .kpi-val.inflation { color: #d84315; }
+        .kpi-val.sellers { color: #4e342e; }
+        .kpi-val.rate { color: #c2185b; }
+
+        .kpi-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #64748b;
+            margin: 0;
+        }
+
+        .kpi-subtitle {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin: 0;
+            margin-top: 2px;
+        }
+
+        /* Table Card Section matching UI */
+        .table-card {
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .table-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .table-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-run-ai {
+            background-color: #2563eb;
+            color: #ffffff;
+            font-weight: 500;
+            border: none;
+            border-radius: 8px;
+            height: 42px;
+            padding: 0 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-run-ai:hover {
+            background-color: #1d4ed8;
+            color: #ffffff;
+        }
+
+        /* Table custom styling matching screenshot */
+        .table {
+            border: 1px solid #e5e7eb;
+            margin-bottom: 0;
+        }
+
+        .table th {
+            background-color: #f8fafc;
+            color: #1e293b;
+            font-weight: 600;
+            border-bottom: 2px solid #e5e7eb;
+            padding: 12px;
+        }
+
+        .table td {
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb;
+            vertical-align: middle;
+        }
+
+        /* Seller pill badge */
+        .seller-badge {
+            background-color: #1e293b;
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 0.8rem;
+            padding: 6px 12px;
+            border-radius: 6px;
+        }
+
+        /* Price text colors */
+        .claimed-price-text {
+            color: #c62828;
+            font-weight: 700;
+        }
+
+        .actual-price-text {
+            color: #2e7d32;
+            font-weight: 700;
+        }
+
+        /* Anomaly progress bar matching original UI */
+        .confidence-val {
+            color: #c62828;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        .progress-confidence {
+            height: 6px;
+            background-color: #f1f5f9;
+            border-radius: 10px;
+            overflow: hidden;
+            width: 100px;
+        }
+
+        .progress-confidence-bar {
+            background-color: #c62828;
+            height: 100%;
+        }
+
+        /* Status suspicious badge */
+        .status-suspicious-badge {
+            background-color: #c62828;
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 0.8rem;
+            padding: 6px 12px;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Chart section cards */
+        .chart-card {
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 24px;
+            height: 420px;
+            margin-bottom: 24px;
+        }
+
+        .chart-title-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .chart-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin: 0;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 320px;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
-    <!-- Navigation Menu -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <!-- Top Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
         <div class="container-fluid">
-            <a class="navbar-brand fw-bold" href="#">
-                <i class="fas fa-chart-line me-2"></i>Analytics Platform
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-chart-line"></i> Analytics Platform
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">
-                            <i class="fas fa-smile me-1"></i>Sentiment Analysis
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="price-manipulation.html">
-                            <i class="fas fa-exclamation-triangle me-1"></i>Price Manipulation
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="product-detail.html">
-                            <i class="fas fa-box me-1"></i>Product Detail
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="manipulation-campaigns.html">
-                            <i class="fas fa-bullseye me-1"></i>Campaigns
-                        </a>
-                    </li>
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-smile me-1"></i>Sentiment Analysis</a></li>
+                    <li class="nav-item"><a class="nav-link active-tab" href="price-manipulation.html"><i class="fas fa-exclamation-triangle me-1"></i>Price Manipulation</a></li>
+                    <li class="nav-item"><a class="nav-link" href="product-detail.html"><i class="fas fa-box me-1"></i>Product Detail</a></li>
+                    <li class="nav-item"><a class="nav-link" href="manipulation-campaigns.html"><i class="fas fa-bullseye me-1"></i>Campaigns</a></li>
+                    <li class="nav-item"><a class="nav-link text-indigo-600" href="admin.html"><i class="fas fa-user-shield me-1"></i>Admin Panel</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
     <div class="container-fluid p-4">
-        <!-- Header -->
-        <div class="dashboard-header d-flex justify-content-between align-items-center mb-3">
+        <!-- Dashboard Header Banner Card -->
+        <div class="dashboard-header-card shadow-sm">
             <h2 class="dashboard-title">Price Manipulation Dashboard</h2>
-            <div class="d-flex gap-3 align-items-center">
-                <select class="form-select font-monospace shadow-sm" id="productFilter" onchange="triggerFullUpdate()">
-                    <option value="all">All Products</option>
-                    <option value="Samsung Galaxy S23 Ultra">Samsung Galaxy S23 Ultra</option>
-                    <option value="Apple iPhone 14 Pro Max">Apple iPhone 14 Pro Max</option>
-                    <option value="Tarte Shape Tape Concealer">Tarte Shape Tape Concealer</option>
-                    <option value="Oysho Women's Compression Leggings">Oysho Women's Compression Leggings</option>
-                    <option value="Adidas Running Shoes">Adidas Running Shoes</option>
-                    <option value="New Balance Sneakers">New Balance Sneakers</option>
+            <div class="d-flex gap-2">
+                <select class="form-select" id="productFilter" onchange="triggerFullUpdate()" style="min-width: 250px;">
+                    <!-- Injected dynamically -->
                 </select>
-                <button class="btn btn-success text-nowrap shadow-sm" onclick="fetchPriceData()" id="fetchPriceBtn">
-                    <i class="fas fa-sync-alt me-2"></i>Refresh Data
+                <button class="btn btn-refresh" onclick="fetchPriceData()" id="fetchPriceBtn">
+                    <i class="fas fa-sync-alt"></i> Refresh Data
                 </button>
             </div>
         </div>
-        
-        <div id="errorMessage" class="alert alert-danger d-none mb-3 shadow-sm"></div>
 
-        <!-- Statistics Cards -->
-        <div class="row g-4 mb-4 mt-3">
+        <div id="errorMessage" class="alert alert-danger d-none mb-4 shadow-sm border-0 rounded-3"></div>
+
+        <!-- Megaphone/Inflation/Sellers/Tag KPI cards matching screenshot -->
+        <div class="row g-3 mb-4">
+            <!-- Card 1: Detected Anomalies -->
             <div class="col-md-3">
-                <div class="stat-card manipulation-card">
-                    <div class="stat-icon warning-icon">
+                <div class="kpi-card shadow-sm">
+                    <div class="kpi-icon-container anomalies">
                         <i class="fas fa-bullhorn"></i>
                     </div>
-                    <div class="stat-content">
-                        <h2 class="stat-value warning-text">1,245</h2>
-                        <p class="stat-label">Detected Anomalies</p>
-                        <small class="stat-description">Total fake discount anomalies caught by AI</small>
+                    <div>
+                        <div class="kpi-val anomalies" id="kpi-anomalies">0</div>
+                        <div class="kpi-title">Detected Anomalies</div>
+                        <div class="kpi-subtitle">Total fake discount anomalies caught by AI</div>
                     </div>
                 </div>
             </div>
+            
+            <!-- Card 2: Avg. Price Inflation -->
             <div class="col-md-3">
-                <div class="stat-card manipulation-card">
-                    <div class="stat-icon inflation-icon">
+                <div class="kpi-card shadow-sm">
+                    <div class="kpi-icon-container inflation">
                         <i class="fas fa-chart-line"></i>
                     </div>
-                    <div class="stat-content">
-                        <h2 class="stat-value inflation-text">30%</h2>
-                        <p class="stat-label">Avg. Price Inflation</p>
-                        <small class="stat-description">Average inflation before applying fake discounts</small>
+                    <div>
+                        <div class="kpi-val inflation" id="kpi-inflation">%0</div>
+                        <div class="kpi-title">Avg. Price Inflation</div>
+                        <div class="kpi-subtitle">Average inflation before applying fake discounts</div>
                     </div>
                 </div>
             </div>
+
+            <!-- Card 3: Suspicious Sellers -->
             <div class="col-md-3">
-                <div class="stat-card manipulation-card">
-                    <div class="stat-icon suspicious-icon">
-                        <i class="fas fa-user-secret"></i>
+                <div class="kpi-card shadow-sm">
+                    <div class="kpi-icon-container sellers">
+                        <i class="fas fa-store"></i>
                     </div>
-                    <div class="stat-content">
-                        <h2 class="stat-value suspicious-text">65%</h2>
-                        <p class="stat-label">Suspicious Sellers</p>
-                        <small class="stat-description">Unique sellers engaging in manipulation</small>
+                    <div>
+                        <div class="kpi-val sellers" id="kpi-sellers">0</div>
+                        <div class="kpi-title">Suspicious Sellers</div>
+                        <div class="kpi-subtitle">Unique sellers engaging in manipulation</div>
                     </div>
                 </div>
             </div>
+
+            <!-- Card 4: Fake Discount Rate -->
             <div class="col-md-3">
-                <div class="stat-card manipulation-card">
-                    <div class="stat-icon fake-icon">
+                <div class="kpi-card shadow-sm">
+                    <div class="kpi-icon-container rate">
                         <i class="fas fa-tag"></i>
                     </div>
-                    <div class="stat-content">
-                        <h2 class="stat-value fake-text">28%</h2>
-                        <p class="stat-label">Fake Discount Rate</p>
-                        <small class="stat-description">Products with inflated then "discounted"</small>
+                    <div>
+                        <div class="kpi-val rate" id="kpi-rate">%0</div>
+                        <div class="kpi-title">Fake Discount Rate</div>
+                        <div class="kpi-subtitle">Products with inflated then "discounted"</div>
                     </div>
                 </div>
             </div>
         </div>
 
-            <!-- AI Analysis Table Section -->
-            <div class="row mb-4">
-                <div class="col-12">
-                    <div class="card shadow-sm border-0">
-                        <div class="card-body p-4">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h5 class="card-title text-primary m-0"><i class="fas fa-brain me-2"></i>AI Anomaly Detection Report</h5>
-                                <div class="d-flex gap-2">
-                                    <select class="form-select shadow-sm" id="aiModelSelect" style="width: auto;" onchange="triggerFullUpdate()">
-                                        <option value="isolation_forest" selected>Isolation Forest (Active)</option>
-                                        <option value="svm">One-Class SVM</option>
-                                    </select>
-                                    <button class="btn btn-primary text-nowrap" onclick="triggerFullUpdate()" id="aiAnalyzeBtn">
-                                        <i class="fas fa-robot me-2"></i>Run AI Analysis
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="table-responsive" id="aiResultsTable" style="display:none;">
-                                <table class="table table-hover table-bordered align-middle">
-                                    <thead class="table-light">
-                                        <tr>
-                                            <th>Date</th>
-                                            <th>Product</th>
-                                            <th>Seller</th>
-                                            <th>Claimed Price</th>
-                                            <th>Actual Price</th>
-                                            <th>AI Confidence</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="aiTableBody">
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+        <!-- AI Table Panel -->
+        <div class="card table-card shadow-sm">
+            <div class="table-header-row" data-bs-toggle="collapse" data-bs-target="#aiTableCollapse" aria-expanded="true" aria-controls="aiTableCollapse" style="cursor: pointer;">
+                <div class="table-title d-flex align-items-center gap-2">
+                    <i class="fas fa-chevron-down toggle-arrow"></i>
+                    <i class="fas fa-globe text-primary"></i> AI Anomaly Detection Report
+                </div>
+                <div class="d-flex gap-2" onclick="event.stopPropagation();">
+                    <select class="form-select" id="aiModelSelect" style="width: auto;" onchange="triggerFullUpdate()">
+                        <option value="bert" selected>Fine-Tuned BERT (Active)</option>
+                    </select>
+                    <button class="btn btn-run-ai" onclick="triggerFullUpdate()" id="aiAnalyzeBtn">
+                        <i class="fas fa-robot"></i> Run AI Analysis
+                    </button>
                 </div>
             </div>
-
-        <!-- Charts Section -->
-        <div class="row g-4">
-            <div class="col-md-6">
-                <div class="chart-card">
-                    <h6 class="chart-title">Top Manipulated Products</h6>
-                    <div class="chart-container horizontal-chart">
-                        <canvas id="barChart"></canvas>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="chart-card">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h6 class="chart-title mb-0">Before - After Price Trend</h6>
-                        <span class="badge bg-light text-dark">Last 30 days</span>
-                    </div>
-                    <div class="chart-container">
-                        <canvas id="trendChart"></canvas>
-                    </div>
+            
+            <div class="collapse show" id="aiTableCollapse">
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Product</th>
+                                <th>Seller</th>
+                                <th>Claimed Price</th>
+                                <th>Actual Price</th>
+                                <th>AI Confidence</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="aiTableBody">
+                            <tr>
+                                <td colspan="7" class="text-center py-4 text-secondary">
+                                    <i class="fas fa-circle-notch fa-spin me-2"></i>Initiating analysis...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+
+
     </div>
 
-    
-    <!-- Bootstrap JS -->
+    <!-- Bootstrap JS & Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     
-
     <script>
+        const API_URL = "http://127.0.0.1:8000";
         let allPriceData = [];
-        let lineChartInstance = null;
         let barChartInstance = null;
+        let inflationChartInstance = null;
+        let radarChartInstance = null;
 
-        // Sayfa yüklendiğinde otomatik olarak veriyi çek
-        document.addEventListener("DOMContentLoaded", () => {
+        document.addEventListener("DOMContentLoaded", async () => {
+            await loadProductsFilter();
             fetchPriceData();
         });
 
+        async function loadProductsFilter() {
+            try {
+                const res = await fetch(`${API_URL}/api/products`);
+                const products = await res.json();
+                
+                const select = document.getElementById("productFilter");
+                select.innerHTML = '';
+                
+                products.forEach((p, idx) => {
+                    select.innerHTML += `<option value="${p.id}" ${idx===0 ? "selected" : ""}>${p.name}</option>`;
+                });
+            } catch (error) {
+                showError("Could not load product filters.");
+            }
+        }
+
         async function fetchPriceData() {
             const btn = document.getElementById("fetchPriceBtn");
-            const errorMsg = document.getElementById("errorMessage");
-            if (errorMsg) errorMsg.classList.add("d-none");
-
-            if(btn) {
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Loading...';
-                btn.disabled = true;
-            }
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Loading...';
+            btn.disabled = true;
+            hideError();
 
             try {
-                const response = await fetch("http://127.0.0.1:8000/price-data");
-                const data = await response.json();
-
+                const res = await fetch(`${API_URL}/price-data`);
+                const data = await res.json();
+                
                 if (data.error) {
-                    if (errorMsg) {
-                        errorMsg.innerHTML = `<i class="fas fa-exclamation-circle me-2"></i>${data.error}`;
-                        errorMsg.classList.remove("d-none");
-                    }
+                    showError(data.error);
+                    return;
+                }
+                
+                allPriceData = data;
+                await triggerFullUpdate();
+            } catch (error) {
+                showError("Failed to fetch price logs.");
+            } finally {
+                btn.innerHTML = '<i class="fas fa-sync-alt me-2"></i>Refresh Data';
+                btn.disabled = false;
+            }
+        }
+
+        async function triggerFullUpdate() {
+            const pid = document.getElementById("productFilter").value;
+            const model_type = document.getElementById("aiModelSelect").value;
+            
+            const btn = document.getElementById("aiAnalyzeBtn");
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Running...';
+            btn.disabled = true;
+
+            try {
+                let url = `${API_URL}/api/analyze-price?model_type=${model_type}`;
+                if (pid) {
+                    url += `&product_id=${pid}`;
+                }
+
+                const res = await fetch(url);
+                const aiData = await res.json();
+
+                if (aiData.error) {
+                    showError(aiData.error);
                     return;
                 }
 
-                if (!Array.isArray(data)) {
-                    throw new Error("API did not return a valid array.");
+                const anomalies = aiData.anomalies || [];
+                const chartData = aiData.chart_data;
+                const stats = aiData.stats;
+
+                // Render KPIs
+                document.getElementById("kpi-anomalies").innerText = anomalies.length;
+                document.getElementById("kpi-inflation").innerText = `%${stats.discount_pct || 0}`;
+                document.getElementById("kpi-sellers").innerText = anomalies.length > 0 ? [...new Set(anomalies.map(a => a.seller))].length : 0;
+                document.getElementById("kpi-rate").innerText = stats.is_manipulated === 1 ? "%10" : "%0";
+
+                // Render Table
+                const tbody = document.getElementById("aiTableBody");
+                tbody.innerHTML = "";
+
+                if (anomalies.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-secondary">No price manipulations detected for this selection.</td></tr>';
+                } else {
+                    anomalies.forEach(item => {
+                        const name = document.getElementById("productFilter").options[document.getElementById("productFilter").selectedIndex].text;
+                        tbody.innerHTML += `
+                            <tr>
+                                <td class="text-secondary fw-semibold">${item.date}</td>
+                                <td>${name}</td>
+                                <td><span class="seller-badge">${item.seller}</span></td>
+                                <td class="claimed-price-text">$${item.claimed_price}</td>
+                                <td class="actual-price-text">$${item.actual_price}</td>
+                                <td>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="confidence-val">${item.confidence}%</span>
+                                        <div class="progress-confidence">
+                                            <div class="progress-confidence-bar" role="progressbar" style="width: ${item.confidence}%"></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="status-suspicious-badge">
+                                        <i class="fas fa-exclamation-triangle"></i> Suspicious
+                                    </span>
+                                </td>
+                            </tr>
+                        `;
+                    });
                 }
 
-                allPriceData = data;
 
-                triggerFullUpdate(); // Veri geldiğinde tam güncellemeyi başlat
 
             } catch (error) {
-                console.error("Fetch Error:", error);
-                if (errorMsg) {
-                    errorMsg.innerHTML = '<i class="fas fa-exclamation-triangle me-2"></i>Failed to fetch price data. Make sure FastAPI backend is running and data is generated.';
-                    errorMsg.classList.remove("d-none");
-                }
+                showError("AI updates failed.");
             } finally {
-                if(btn) {
-                    btn.innerHTML = '<i class="fas fa-sync-alt me-2"></i>Refresh Data';
-                    btn.disabled = false;
-                }
+                btn.innerHTML = '<i class="fas fa-robot"></i> Run AI Analysis';
+                btn.disabled = false;
             }
         }
 
-        // STATE MANAGEMENT CORE: Tüm UI'ı tek bir kaynak(SSOT) üzerinden günceller
-        async function triggerFullUpdate() {
-            const selectedProduct = document.getElementById("productFilter").value;
-            const selectedModel = document.getElementById("aiModelSelect").value;
-            
-            // Deep Copy kullanarak orijinal veriyi koruyoruz
-            let filteredData = JSON.parse(JSON.stringify(allPriceData));
-            
-            if (selectedProduct !== "all") {
-                filteredData = allPriceData.filter(d => d.product_name === selectedProduct);
+        function renderInflationChart(anomalies) {
+            const ctx = document.getElementById('inflationChart').getContext('2d');
+            if (inflationChartInstance) {
+                inflationChartInstance.destroy();
             }
 
-            // Fallback Handling: Eğer seçili markanın verisi CSV'de yoksa (eski data) State'i sıfırla ve Informative UI göster
-            if (filteredData.length === 0) {
-                document.querySelector('.warning-text').innerText = "0";
-                document.querySelector('.inflation-text').innerText = "%0";
-                document.querySelector('.suspicious-text').innerText = "0";
-                document.querySelector('.fake-text').innerText = "%0";
-                updateCharts([], selectedProduct);
-                document.getElementById("aiTableBody").innerHTML = '<tr><td colspan="7" class="text-center text-muted py-3">No data available.</td></tr>';
-                return;
-            }
-
-            // AI Analizini Bekle ve Verileri Birleştir (Merge)
-            const anomalies = await fetchAIAnomalies(selectedProduct, selectedModel);
-            
-            const anomalyMap = new Set(anomalies.map(a => a.date + "_" + a.product));
-            filteredData.forEach(d => {
-                d.is_ai_manipulation = anomalyMap.has(d.date + "_" + d.product_name);
+            // Calculate average inflated amount per seller
+            const stats = {};
+            anomalies.forEach(a => {
+                if (!stats[a.seller]) stats[a.seller] = { sum: 0, count: 0 };
+                stats[a.seller].sum += (a.claimed_price - a.actual_price);
+                stats[a.seller].count += 1;
             });
 
-            // --- İSTATİSTİK KARTLARINI GÜNCELLEME ---
-            const manipRecords = filteredData.filter(d => d.is_ai_manipulation);
-            
-            // 1. Sahte Kampanyalı Gün Sayısı
-            document.querySelector('.warning-text').innerText = manipRecords.length;
+            const labels = Object.keys(stats);
+            const data = labels.map(seller => (stats[seller].sum / stats[seller].count).toFixed(2));
+            const colors = ['#1e88e5', '#fb8c00', '#43a047', '#e53935', '#8e24aa'];
 
-            // 2. Ortalama Şişirme Oranı (Inflation Price)
-            let totalInflation = 0;
-            manipRecords.forEach(d => {
-                if (d.claimed_original_price > d.actual_price) {
-                    totalInflation += ((d.claimed_original_price - d.actual_price) / d.actual_price) * 100;
-                }
-            });
-            const avgInflation = manipRecords.length > 0 ? Math.round(totalInflation / manipRecords.length) : 0;
-            document.querySelector('.inflation-text').innerText = "%" + avgInflation;
-
-            // 3. Şüpheli Satıcı Sayısı
-            const uniqueSellers = [...new Set(manipRecords.map(d => d.seller))].length;
-            document.querySelector('.suspicious-text').innerText = uniqueSellers;
-            
-            // 4. Fake Discount Rate (Sahte İndirim Oranı)
-            const totalRecords = filteredData.length;
-            const fakeRate = totalRecords > 0 ? Math.round((manipRecords.length / totalRecords) * 100) : 0;
-            document.querySelector('.fake-text').innerText = "%" + fakeRate;
-
-            // --- GRAFİKLERİ GÜNCELLEME ---
-            updateCharts(filteredData, selectedProduct);
-        }
-
-        function updateCharts(data, selectedProduct) {
-            const colors = ['#007bff', '#dc3545', '#ffc107', '#28a745', '#6f42c1'];
-            
-            // --- 1. Çizgi Grafiği (Trend Chart) ---
-            const dates = [...new Set(data.map(item => item.date))].sort();
-            const products = selectedProduct === "all" ? [...new Set(data.map(item => item.product_name))] : [selectedProduct];
-
-            const lineDatasets = products.map((prod, index) => {
-                const prodData = data.filter(item => item.product_name === prod);
-                
-                const prices = dates.map(date => {
-                    const record = prodData.find(d => d.date === date);
-                    return record ? record.actual_price : null;
-                });
-                
-                const manipulations = dates.map(date => {
-                    const record = prodData.find(d => d.date === date);
-                    return record ? record.is_ai_manipulation : false;
-                });
-
-                const pointColors = manipulations.map(is_manip => is_manip ? 'red' : colors[index % colors.length]);
-                const pointRadii = manipulations.map(is_manip => is_manip ? 6 : 3);
-
-                return {
-                    label: prod,
-                    data: prices,
-                    borderColor: colors[index % colors.length],
-                    backgroundColor: colors[index % colors.length],
-                    pointBackgroundColor: pointColors,
-                    pointRadius: pointRadii,
-                    fill: false,
-                    tension: 0.1
-                };
-            });
-
-            const lineCtx = document.getElementById('trendChart').getContext('2d');
-            if (lineChartInstance) lineChartInstance.destroy();
-            lineChartInstance = new Chart(lineCtx, {
-                type: 'line',
-                data: { labels: dates, datasets: lineDatasets },
+            inflationChartInstance = new Chart(ctx, {
+                type: 'polarArea',
+                data: {
+                    labels: labels.length > 0 ? labels : ["No Data"],
+                    datasets: [{
+                        label: 'Avg Inflation ($)',
+                        data: data.length > 0 ? data : [0],
+                        backgroundColor: colors.slice(0, labels.length).map(c => c + 'AA'),
+                        borderWidth: 1
+                    }]
+                },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    let record = data.find(d => d.date === context.label && d.product_name === context.dataset.label);
-                                    let text = context.dataset.label + ': ' + context.parsed.y + ' $';
-                                    if (record && record.is_ai_manipulation) {
-                                        text += ' \u26A0\uFE0F AI ALERT: FAKE DISCOUNT! (Claimed: ' + record.claimed_original_price + ' $)';
-                                    } else if (record && record.claimed_original_price > record.actual_price && !record.is_ai_manipulation) {
-                                        text += ' \uD83D\uDFE2 REAL DISCOUNT! (Old Price: ' + record.claimed_original_price + ' $)';
-                                    }
-                                    return text;
-                                }
-                            }
-                        }
+                        legend: { position: 'right', labels: { boxWidth: 12 } }
                     }
                 }
             });
+        }
 
-            // --- 2. Sütun Grafiği (Top Manipulated Products) ---
-            const manipCounts = {};
-            data.filter(d => d.is_ai_manipulation).forEach(d => {
-                manipCounts[d.product_name] = (manipCounts[d.product_name] || 0) + 1;
+        function renderRadarChart(anomalies) {
+            const ctx = document.getElementById('radarChart').getContext('2d');
+            if (radarChartInstance) {
+                radarChartInstance.destroy();
+            }
+
+            const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            const counts = {0:0, 1:0, 2:0, 3:0, 4:0, 5:0, 6:0};
+
+            anomalies.forEach(a => {
+                const dayIndex = new Date(a.date).getDay();
+                counts[dayIndex]++;
             });
 
-            const sortedProds = Object.keys(manipCounts).sort((a, b) => manipCounts[b] - manipCounts[a]);
-            const barData = sortedProds.map(p => manipCounts[p]);
+            const data = days.map((_, i) => counts[i]);
 
-            const barCtx = document.getElementById('barChart').getContext('2d');
-            if (barChartInstance) barChartInstance.destroy();
-            
-            // Empty State (Boş Grafik) Handling
-            if (sortedProds.length === 0) {
-                barChartInstance = new Chart(barCtx, {
-                    type: 'bar',
-                    data: { labels: ['No Data Available'], datasets: [{ label: 'Manipulation Info', data: [0], backgroundColor: '#e9ecef' }] },
-                    options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false }
-                });
-            } else {
-                barChartInstance = new Chart(barCtx, {
-                    type: 'bar',
-                    data: {
-                        labels: sortedProds,
-                        datasets: [{
-                            label: 'Days with Manipulation',
-                            data: barData,
-                            backgroundColor: '#dc3545'
-                        }]
+            radarChartInstance = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: days,
+                    datasets: [{
+                        label: 'Anomalies Detected',
+                        data: data,
+                        backgroundColor: 'rgba(236, 72, 153, 0.2)', // Pink 500 transparent
+                        borderColor: '#ec4899',
+                        pointBackgroundColor: '#ec4899',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            ticks: { display: false } // Hide ugly numbers on radar
+                        }
                     },
-                    options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false }
-                });
-            }
-        }
-
-    // Sadece API isteğini yapar ve tabloyu doldurur, geriye anomalileri döner
-    async function fetchAIAnomalies(selectedProduct, selectedModel) {
-        const btn = document.getElementById("aiAnalyzeBtn");
-        const errorMsg = document.getElementById("errorMessage");
-        if (errorMsg) errorMsg.classList.add("d-none");
-
-        if (btn) {
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Analyzing...';
-            btn.disabled = true;
-        }
-
-        try {
-            // Ürün isimlerindeki boşlukların API çağrısında hata yaratmasını engellemek için encodeURIComponent kullanıyoruz.
-            const response = await fetch(`http://127.0.0.1:8000/analyze-price?product=${encodeURIComponent(selectedProduct)}&model_type=${selectedModel}`);
-            const data = await response.json();
-
-            if (data.error) {
-                if (errorMsg) {
-                    errorMsg.innerHTML = `<i class="fas fa-exclamation-circle me-2"></i>${data.error}`;
-                    errorMsg.classList.remove("d-none");
+                    plugins: {
+                        legend: { display: false }
+                    }
                 }
-                return [];
-            }
-
-            const tableBody = document.getElementById("aiTableBody");
-            tableBody.innerHTML = "";
-
-            if (!data.anomalies || data.anomalies.length === 0) {
-                tableBody.innerHTML = '<tr><td colspan="7" class="text-center text-muted py-3">No suspicious price manipulation detected by AI for this selection.</td></tr>';
-            } else {
-                data.anomalies.forEach((item) => {
-                    const row = `<tr>
-                        <td>${item.date}</td>
-                        <td>${item.product}</td>
-                        <td><span class="badge bg-dark">${item.seller}</span></td>
-                        <td class="text-danger fw-bold"><del>$${item.claimed_price}</del></td>
-                        <td class="text-success fw-bold">$${item.actual_price}</td>
-                        <td>
-                            <div class="d-flex align-items-center">
-                                <span class="me-2 fw-bold text-danger">${item.confidence}%</span>
-                                <div class="progress flex-grow-1" style="height: 8px;">
-                                    <div class="progress-bar bg-danger" role="progressbar" style="width: ${item.confidence}%"></div>
-                                </div>
-                            </div>
-                        </td>
-                        <td><span class="badge bg-danger"><i class="fas fa-exclamation-triangle me-1"></i>Suspicious</span></td>
-                    </tr>`;
-                    tableBody.innerHTML += row;
-                });
-            }
-
-            document.getElementById("aiResultsTable").style.display = "block";
-            
-            return data.anomalies || [];
-
-        } catch (error) {
-            console.error("AI Analysis Error:", error);
-            if (errorMsg) {
-                errorMsg.innerHTML = '<i class="fas fa-exclamation-triangle me-2"></i>Error connecting to AI Analysis API. Make sure FastAPI is running.';
-                errorMsg.classList.remove("d-none");
-            }
-            return [];
-        } finally {
-            if (btn) {
-                btn.innerHTML = '<i class="fas fa-robot me-2"></i>Run AI Analysis';
-                btn.disabled = false;
-            }
+            });
         }
-    }
+
+        function renderBarChart(anomalies) {
+            const ctx = document.getElementById('barChart').getContext('2d');
+            if (barChartInstance) {
+                barChartInstance.destroy();
+            }
+
+            const counts = {};
+            anomalies.forEach(a => {
+                counts[a.seller] = (counts[a.seller] || 0) + 1;
+            });
+
+            const labels = Object.keys(counts);
+            const data = Object.values(counts);
+
+            barChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels.length > 0 ? labels : ["No Data"],
+                    datasets: [{
+                        label: 'Days with Manipulation',
+                        data: data.length > 0 ? data : [0],
+                        backgroundColor: '#c62828',
+                        borderColor: '#c62828',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { ticks: { color: '#64748b' }, grid: { color: 'rgba(0, 0, 0, 0.05)' } },
+                        y: { ticks: { color: '#64748b' }, grid: { color: 'rgba(0, 0, 0, 0.05)' } }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        }
+
+        function showError(msg) {
+            const errorMsg = document.getElementById("errorMessage");
+            errorMsg.innerText = msg;
+            errorMsg.classList.remove("d-none");
+        }
+
+        function hideError() {
+            document.getElementById("errorMessage").classList.add("d-none");
+        }
     </script>
 </body>
 </html>

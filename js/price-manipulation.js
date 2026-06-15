@@ -10,8 +10,7 @@ const manipulationColors = {
     fakeDiscount: '#FF6B35'
 };
 
-// Horizontal Bar Chart - Top Manipulated Products
-const barCtx = document.getElementById('barChart').getContext('2d');
+// Horizontal Bar Chart - const barCtx = document.getElementById('barChart').getContext('2d');
 const barChart = new Chart(barCtx, {
     type: 'bar',
     data: {

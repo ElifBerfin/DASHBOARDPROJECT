@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,298 +11,678 @@
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Outfit', -apple-system, sans-serif;
+            background-color: #f6f8fb;
+            color: #333333;
+            min-height: 100vh;
+        }
+
+        /* Top Navbar Custom Style matching the screenshot */
+        .navbar {
+            background-color: #ffffff !important;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 12px 24px;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: #1e293b !important;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-brand i {
+            color: #1e293b;
+            margin-right: 8px;
+        }
+
+        .nav-link {
+            color: #475569 !important;
+            font-weight: 500;
+            padding: 8px 16px !important;
+            margin: 0 4px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-link:hover {
+            color: #1e293b !important;
+        }
+
+        /* Active navigation tab matching the screenshot button style */
+        .nav-link.active-tab {
+            background-color: #54bab9 !important;
+            color: #ffffff !important;
+            border-radius: 8px;
+        }
+
+        .dashboard-header-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 24px;
+            padding: 15px 24px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+
+        /* Main Container Card matching Sentiment Insight card */
+        .insight-card {
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .insight-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        /* Dropdowns & Selects matching original UI */
+        .form-select {
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 10px 16px;
+            color: #334155;
+            background-color: #ffffff;
+            font-size: 0.95rem;
+            height: 46px;
+        }
+
+        .form-select:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+        }
+
+        /* Primary Blue Button matching Analyze CSV Data */
+        .btn-analyze {
+            background-color: #2563eb;
+            color: #ffffff;
+            font-weight: 500;
+            border: none;
+            border-radius: 8px;
+            height: 46px;
+            padding: 0 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background-color 0.2s;
+        }
+
+        .btn-analyze:hover {
+            background-color: #1d4ed8;
+            color: #ffffff;
+        }
+
+        /* KPI Cards Grid */
+        .kpi-container {
+            margin-top: 24px;
+        }
+
+        .kpi-card {
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        .kpi-icon {
+            font-size: 1.5rem;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            margin-right: 16px;
+        }
+
+        .kpi-icon.pos { background-color: #ecfdf5; color: #10b981; }
+        .kpi-icon.neu { background-color: #f1f5f9; color: #64748b; }
+        .kpi-icon.neg { background-color: #fef2f2; color: #ef4444; }
+        .kpi-icon.star { background-color: #fffbeb; color: #f59e0b; }
+
+        .kpi-val {
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.1;
+        }
+
+        .kpi-val.pos { color: #10b981; }
+        .kpi-val.neu { color: #64748b; }
+        .kpi-val.neg { color: #ef4444; }
+        .kpi-val.star { color: #f59e0b; }
+
+        .kpi-label {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-top: 2px;
+        }
+
+        /* Table Card Section */
+        .table-card {
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .table-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .table-title i {
+            color: #3b82f6;
+        }
+
+        /* Table Styling matching user screenshot */
+        .table {
+            margin-bottom: 0;
+            border: 1px solid #e5e7eb;
+        }
+
+        .table th {
+            background-color: #f8fafc;
+            color: #0f172a;
+            font-weight: 600;
+            border-bottom: 2px solid #e5e7eb;
+            padding: 12px 16px;
+        }
+
+        .table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #e5e7eb;
+            vertical-align: middle;
+        }
+
+        /* Rounded Badges matching screenshot */
+        .sentiment-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #ffffff;
+            border-radius: 50px;
+            text-align: center;
+        }
+
+        .sentiment-badge.pos { background-color: #2e7d32; }
+        .sentiment-badge.neg { background-color: #c62828; }
+        .sentiment-badge.neu { background-color: #78909c; }
+
+        .pagination-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .btn-outline-secondary {
+            border-color: #cbd5e1;
+            color: #475569;
+            border-radius: 6px;
+        }
+
+        .btn-outline-secondary:hover {
+            background-color: #f1f5f9;
+            color: #1e293b;
+        }
+
+        /* Skeleton UI & Animations */
+        @keyframes pulse {
+            0% { background-color: #e2e8f0; }
+            50% { background-color: #cbd5e1; }
+            100% { background-color: #e2e8f0; }
+        }
+        .skeleton {
+            color: transparent !important;
+            user-select: none;
+            position: relative;
+            overflow: hidden;
+            background-color: #e2e8f0 !important;
+            animation: pulse 1.5s infinite ease-in-out;
+            border-radius: 4px;
+        }
+        .skeleton * {
+            visibility: hidden;
+        }
+        .skeleton-text {
+            height: 14px;
+            width: 80%;
+            background-color: #e2e8f0;
+            border-radius: 4px;
+            margin: 6px 0;
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+        .skeleton-badge {
+            height: 28px;
+            width: 70px;
+            background-color: #e2e8f0;
+            border-radius: 50px;
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+        @keyframes fadein {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadein 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            opacity: 0;
+        }
+        
+        /* Streaming text effect */
+        .ai-streaming-text {
+            font-family: 'Courier New', Courier, monospace;
+            color: #2563eb;
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+            height: 20px;
+            font-weight: 600;
+        }
+        
+        .ai-model-tag {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            font-style: italic;
+            margin-top: 6px;
+            display: block;
+        }
+    </style>
 </head>
 <body>
-    <!-- Navigation Menu -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <!-- Top Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
         <div class="container-fluid">
-            <a class="navbar-brand fw-bold" href="#">
-                <i class="fas fa-chart-line me-2"></i>Analytics Platform
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-chart-line"></i> Analytics Platform
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="index.html">
-                            <i class="fas fa-smile me-1"></i>Sentiment Analysis
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="price-manipulation.html">
-                            <i class="fas fa-exclamation-triangle me-1"></i>Price Manipulation
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="product-detail.html">
-                            <i class="fas fa-box me-1"></i>Product Detail
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="manipulation-campaigns.html">
-                            <i class="fas fa-bullseye me-1"></i>Campaigns
-                        </a>
-                    </li>
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link active-tab" href="index.html"><i class="fas fa-smile me-1"></i>Sentiment Analysis</a></li>
+                    <li class="nav-item"><a class="nav-link" href="price-manipulation.html"><i class="fas fa-exclamation-triangle me-1"></i>Price Manipulation</a></li>
+                    <li class="nav-item"><a class="nav-link" href="product-detail.html"><i class="fas fa-box me-1"></i>Product Detail</a></li>
+                    <li class="nav-item"><a class="nav-link" href="manipulation-campaigns.html"><i class="fas fa-bullseye me-1"></i>Campaigns</a></li>
+                    <li class="nav-item"><a class="nav-link text-indigo-600" href="admin.html"><i class="fas fa-user-shield me-1"></i>Admin Panel</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
     <div class="container-fluid p-4">
-        <!-- Header -->
-        <div class="dashboard-header">
-            <h2 class="dashboard-title">Sentiment Analysis Dashboard</h2>
+        <!-- Dashboard Header Title Container -->
+        <div class="dashboard-header-title">
+            Sentiment Analysis Dashboard
         </div>
 
-        <!-- Sentiment Insight Section -->
-        <div class="insight-section mt-4">
-            <h5 class="section-title mb-3">Sentiment Insight</h5>
+        <div id="errorMessage" class="alert alert-danger d-none mb-4 shadow-sm border-0 rounded-3"></div>
+
+        <!-- Sentiment Insight Control Card -->
+        <div class="card insight-card">
+            <div class="insight-title">Sentiment Insight</div>
             
-            <div id="errorMessage" class="alert alert-danger d-none mb-3 shadow-sm"></div>
-
-            <div class="row mb-4 align-items-center">
-                <div class="col-md-3 mb-3">
-                    <select class="form-select" id="productSearch">
-                        <option value="" selected disabled>Select a product...</option>
-                        <option value="samsung">Samsung Galaxy S23 Ultra</option>
-                        <option value="apple">Apple iPhone 14 Pro Max</option>
-                        <option value="tarte">Tarte Shape Tape Concealer</option>
-                        <option value="oysho">Oysho Women's Compression Leggings</option>
-                        <option value="adidas">Adidas Running Shoes</option>
-                        <option value="new balance">New Balance Sneakers</option>
+            <div class="row align-items-center g-3">
+                <div class="col-md-2">
+                    <select class="form-select" id="storeSelect" onchange="resetAndFetchReviews()">
+                        <option value="">All Stores</option>
+                        <option value="Amazon">Amazon</option>
+                        <option value="Trendyol">Trendyol</option>
+                        <option value="Hepsiburada">Hepsiburada</option>
+                        <option value="MediaMarkt">MediaMarkt</option>
+                        <option value="Watsons">Watsons</option>
+                        <option value="Gratis">Gratis</option>
                     </select>
                 </div>
-                <div class="col-md-3 mb-3">
-                    <select class="form-select" id="timeFilter">
+                <div class="col-md-3">
+                    <select class="form-select" id="productSelect" onchange="resetAndFetchReviews()">
+                        <!-- Loaded dynamically -->
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-select" id="timeframeSelect" onchange="resetAndFetchReviews()">
                         <option value="30" selected>Last 30 days</option>
-                        <option value="180">Last 6 months</option>
-                        <option value="365">Last year</option>
+                        <option value="90">Last 90 days</option>
                     </select>
                 </div>
-                <div class="col-md-3 mb-3">
-                    <select class="form-select" id="modelSelect">
-                        <option value="nlptown" selected>BERT-base (Active)</option>
-
-                        <option value="roberta">RoBERTa</option>
+                <div class="col-md-3">
+                    <select class="form-select" id="modelSelect" onchange="resetAndFetchReviews()">
+                        <option value="bert" selected>BERT-base </option>
+                        <option value="roberta">RoBERTa Model</option>
                         <option value="lstm">LSTM Model</option>
                     </select>
                 </div>
-                <div class="col-md-3 mb-3">
-                    <button class="btn btn-primary w-100 shadow-sm" onclick="fetchAndAnalyze()" id="analyzeBtn">
-                        <i class="fas fa-robot me-2"></i>Analyze CSV Data
+                <div class="col-md-3">
+                    <button class="btn btn-analyze w-100" id="refreshBtn" onclick="resetAndFetchReviews()">
+                        <i class="fas fa-robot"></i> Analyze CSV Data
                     </button>
                 </div>
             </div>
 
-            <!-- Statistics Cards -->
-            <div class="row g-4 mb-4">
+            <!-- KPI Row inside Sentiment Insight card -->
+            <div class="row g-3 kpi-container">
                 <div class="col-md-3">
-                    <div class="stat-card">
-                        <div class="stat-icon positive">
-                            <i class="far fa-smile"></i>
-                        </div>
-                        <div class="stat-content">
-                            <h2 class="stat-value positive-text" id="stat-positive">64%</h2>
-                            <p class="stat-label">Positive Review</p>
+                    <div class="kpi-card">
+                        <div class="kpi-icon pos"><i class="far fa-smile"></i></div>
+                        <div>
+                            <div class="kpi-val pos" id="kpi-positive">0%</div>
+                            <div class="kpi-label">Positive Review</div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="stat-card">
-                        <div class="stat-icon neutral">
-                            <i class="far fa-meh"></i>
-                        </div>
-                        <div class="stat-content">
-                            <h2 class="stat-value neutral-text" id="stat-neutral">21%</h2>
-                            <p class="stat-label">Neutral Review</p>
+                    <div class="kpi-card">
+                        <div class="kpi-icon neu"><i class="far fa-meh"></i></div>
+                        <div>
+                            <div class="kpi-val neu" id="kpi-neutral">0%</div>
+                            <div class="kpi-label">Neutral Review</div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="stat-card">
-                        <div class="stat-icon negative">
-                            <i class="far fa-frown"></i>
-                        </div>
-                        <div class="stat-content">
-                            <h2 class="stat-value negative-text" id="stat-negative">15%</h2>
-                            <p class="stat-label">Negative Review</p>
+                    <div class="kpi-card">
+                        <div class="kpi-icon neg"><i class="far fa-frown"></i></div>
+                        <div>
+                            <div class="kpi-val neg" id="kpi-negative">0%</div>
+                            <div class="kpi-label">Negative Review</div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="stat-card">
-                        <div class="stat-icon rating">
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <div class="stat-content">
-                            <h2 class="stat-value rating-text" id="stat-rating">4.1 <span class="stat-value-small">/5</span></h2>
-                            <p class="stat-label">Average Rating</p>
+                    <div class="kpi-card">
+                        <div class="kpi-icon star"><i class="far fa-star"></i></div>
+                        <div>
+                            <div class="kpi-val star">
+                                <span id="kpi-avg-rating">0.0</span> <span style="font-size:0.9rem; color:#64748b; font-weight:normal;">/5</span>
+                            </div>
+                            <div class="kpi-label">Average Rating</div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Analysis Table Section -->
-            <div class="row mb-4">
-                <div class="col-12">
-                    <div class="card shadow-sm border-0">
-                        <div class="card-body p-4">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h5 class="card-title text-primary m-0"><i class="fas fa-list me-2"></i>Recent Reviews Analysis</h5>
-                            </div>
-                            <div class="table-responsive" id="resultsTable" style="display:none;">
-                                <table class="table table-hover table-bordered align-middle">
-                                    <thead class="table-light">
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Customer Review</th>
-                                            <th>Sentiment</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tableBody">
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+        <!-- Recent Reviews Table Card -->
+        <div class="card table-card">
+            <div class="table-title">
+                <i class="fas fa-list-ul"></i> Recent Reviews Analysis
+            </div>
+            
+            <!-- Filters row -->
+            <div class="row g-2 mb-3">
+                <div class="col-md-6">
+                    <input type="text" class="form-control" id="searchQuery" placeholder="Search comments..." oninput="resetAndFetchReviews()" style="border-radius:8px;">
+                </div>
+                <div class="col-md-3">
+                    <select class="form-select" id="ratingFilter" onchange="resetAndFetchReviews()">
+                        <option value="">All Ratings</option>
+                        <option value="5">5 Stars</option>
+                        <option value="4">4 Stars</option>
+                        <option value="3">3 Stars</option>
+                        <option value="2">2 Stars</option>
+                        <option value="1">1 Star</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-select" id="sentimentFilter" onchange="resetAndFetchReviews()">
+                        <option value="">All Sentiments</option>
+                        <option value="Positive">Positive</option>
+                        <option value="Neutral">Neutral</option>
+                        <option value="Negative">Negative</option>
+                    </select>
                 </div>
             </div>
 
-            <!-- Charts Section -->
-            <div class="row g-4">
-                <div class="col-md-6">
-                    <div class="chart-card">
-                        <h6 class="chart-title">Sentiment Distribution</h6>
-                        <div class="chart-container">
-                            <canvas id="pieChart"></canvas>
-                        </div>
-                    </div>
+            <div class="table-responsive">
+                <table class="table align-middle">
+                    <thead>
+                        <tr>
+                            <th style="width: 50px;">#</th>
+                            <th>Customer Review</th>
+                            <th style="width: 150px;">Sentiment</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reviewsTableBody">
+                        <tr>
+                            <td colspan="3" class="text-center py-4 text-secondary">
+                                <i class="fas fa-circle-notch fa-spin me-2"></i>Loading comments...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Table Pagination -->
+            <div class="pagination-container">
+                <button class="btn btn-sm btn-outline-secondary" id="prevPageBtn" onclick="changePage(-1)">
+                    <i class="fas fa-chevron-left me-1"></i>Previous
+                </button>
+                <span class="text-secondary fw-semibold" id="pageIndicator">Page 1</span>
+                <button class="btn btn-sm btn-outline-secondary" id="nextPageBtn" onclick="changePage(1)">
+                    Next<i class="fas fa-chevron-right ms-1"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-4" style="z-index: 1055;">
+        <div id="aiToast" class="toast align-items-center text-white bg-primary border-0 shadow-lg" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body fw-medium" id="aiToastMessage">
+                    <i class="fas fa-robot me-2"></i> <span id="toastText">Model loaded</span>
                 </div>
-                <div class="col-md-6">
-                    <div class="chart-card">
-                        <h6 class="chart-title">Sentiment Trend</h6>
-                        <div class="chart-container">
-                            <canvas id="lineChart"></canvas>
-                        </div>
-                    </div>
-                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
         </div>
     </div>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    
-    <!-- Custom JS -->
-    <script src="js/charts.js"></script>
 
     <script>
-        async function fetchAndAnalyze() {
-            const btn = document.getElementById("analyzeBtn");
-            const errorMsg = document.getElementById("errorMessage");
-            if (errorMsg) errorMsg.classList.add("d-none");
+        const API_URL = "http://127.0.0.1:8000";
+        let currentPage = 1;
+        let totalPages = 1;
 
-            if (btn) {
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Analyzing...';
-                btn.disabled = true;
-            }
+        document.addEventListener("DOMContentLoaded", async () => {
+            await loadProducts();
+            resetAndFetchReviews();
+        });
 
-            const modelType = document.getElementById("modelSelect").value;
-            const productInput = document.getElementById("productSearch").value;
+        async function loadProducts() {
+            try {
+                const res = await fetch(`${API_URL}/api/products`);
+                const products = await res.json();
+                
+                const select = document.getElementById("productSelect");
+                select.innerHTML = "";
+                
+                const newProductId = localStorage.getItem("newly_activated_product");
+                
+                products.forEach((p, idx) => {
+                    const isNew = newProductId && p.id.toString() === newProductId;
+                    const nameDisplay = isNew ? `${p.name} (NEW)` : p.name;
+                    const isSelected = isNew || (!newProductId && idx === 0) ? "selected" : "";
+                    select.innerHTML += `<option value="${p.id}" ${isSelected}>${nameDisplay}</option>`;
+                });
+            } catch (error) {
+                showError("Could not load product list.");
+            }
+        }
+
+        function resetAndFetchReviews() {
+            currentPage = 1;
+            fetchReviews();
+        }
+
+        function changePage(direction) {
+            const targetPage = currentPage + direction;
+            if (targetPage >= 1 && targetPage <= totalPages) {
+                currentPage = targetPage;
+                fetchReviews();
+            }
+        }
+        
+        function showToast(msg) {
+            document.getElementById("toastText").innerText = msg;
+            const toastEl = document.getElementById('aiToast');
+            const toast = new bootstrap.Toast(toastEl, { delay: 3000 });
+            toast.show();
+        }
+
+        const streamingMessages = [
+            "Analyzing sentiment patterns...",
+            "Comparing review embeddings...",
+            "Detecting emotional polarity...",
+            "Final sentiment score generated."
+        ];
+        let streamingInterval;
+
+        async function fetchReviews() {
+            const product_id = document.getElementById("productSelect").value;
+            const search = document.getElementById("searchQuery").value;
+            const rating = document.getElementById("ratingFilter").value;
+            const sentiment = document.getElementById("sentimentFilter").value;
+            const modelSelect = document.getElementById("modelSelect");
+            const model_type = modelSelect.value;
+            const model_name = modelSelect.options[modelSelect.selectedIndex].text;
+            const store = document.getElementById("storeSelect").value;
             
-            if (!productInput) {
-                if (errorMsg) {
-                    errorMsg.innerHTML = `<i class="fas fa-exclamation-circle me-2"></i>Please select a product from the list first!`;
-                    errorMsg.classList.remove("d-none");
-                }
-                if (btn) {
-                    btn.innerHTML = '<i class="fas fa-robot me-2"></i>Analyze CSV Data';
-                    btn.disabled = false;
-                }
-                return;
+            if (!product_id) return;
+
+            hideError();
+            
+            // Set UI to Skeleton Loading State
+            document.querySelectorAll('.kpi-val').forEach(el => el.classList.add('skeleton'));
+            const tbody = document.getElementById("reviewsTableBody");
+            
+            let skeletons = "";
+            for(let i=0; i<4; i++) {
+                skeletons += `
+                    <tr>
+                        <td><div class="skeleton-text" style="width: 20px;"></div></td>
+                        <td>
+                            ${i===0 ? '<div class="ai-streaming-text" id="streamingText"></div>' : ''}
+                            <div class="skeleton-text"></div>
+                            <div class="skeleton-text" style="width: ${60 + Math.random()*30}%;"></div>
+                        </td>
+                        <td><div class="skeleton-badge"></div></td>
+                    </tr>
+                `;
+            }
+            tbody.innerHTML = skeletons;
+            
+            showToast(`Switching to ${model_name}...`);
+
+            // Start streaming text effect
+            let streamIdx = 0;
+            const streamEl = document.getElementById("streamingText");
+            if (streamEl) {
+                streamEl.innerText = streamingMessages[streamIdx];
+                clearInterval(streamingInterval);
+                streamingInterval = setInterval(() => {
+                    streamIdx = (streamIdx + 1) % streamingMessages.length;
+                    const el = document.getElementById("streamingText");
+                    if(el) el.innerText = streamingMessages[streamIdx];
+                    else clearInterval(streamingInterval);
+                }, 500);
             }
             
-            const product = productInput;
-            const timeFilter = document.getElementById("timeFilter").value;
+            let url = `${API_URL}/api/reviews?product_id=${product_id}&page=${currentPage}&limit=10&model_type=${model_type}`;
+            if (search) url += `&search=${encodeURIComponent(search)}`;
+            if (rating) url += `&rating=${rating}`;
+            if (sentiment) url += `&sentiment=${sentiment}`;
+            if (store) url += `&store=${encodeURIComponent(store)}`;
 
             try {
-                const response = await fetch(`http://127.0.0.1:8000/analyze-csv?limit=20&model_type=${modelType}&product=${product}&time_filter=${timeFilter}`);
-                const data = await response.json();
+                const res = await fetch(url);
+                const data = await res.json();
+                
+                clearInterval(streamingInterval);
 
                 if (data.error) {
-                    if (errorMsg) {
-                        errorMsg.innerHTML = `<i class="fas fa-exclamation-circle me-2"></i>${data.error}`;
-                        errorMsg.classList.remove("d-none");
-                    }
+                    showError(data.error);
+                    document.querySelectorAll('.kpi-val').forEach(el => el.classList.remove('skeleton'));
                     return;
                 }
 
-                const results = data.results;
-                let posCount = 0;
-                let negCount = 0;
-                let modelScoreSum = 0;
+                totalPages = data.total_pages;
+                document.getElementById("pageIndicator").innerText = `Page ${data.current_page} of ${data.total_pages}`;
                 
-                const tableBody = document.getElementById("tableBody");
-                tableBody.innerHTML = "";
+                // Toggle pagination buttons
+                document.getElementById("prevPageBtn").disabled = (data.current_page <= 1);
+                document.getElementById("nextPageBtn").disabled = (data.current_page >= data.total_pages);
 
-                results.forEach((item, index) => {
-                    if (item.sentiment === "Positive") { posCount++; modelScoreSum += 5; }
-                    else if (item.sentiment === "Negative") { negCount++; modelScoreSum += 1; }
-                    else { modelScoreSum += 3; }
-                    
-                    const badgeClass = item.sentiment === "Positive" ? "badge bg-success" : (item.sentiment === "Negative" ? "badge bg-danger" : "badge bg-secondary");
-                    
-                    const row = `<tr>
-                        <td>${index + 1}</td>
-                        <td>${item.text}</td>
-                        <td><span class="${badgeClass}">${item.sentiment}</span></td>
-                    </tr>`;
-                    tableBody.innerHTML += row;
-                });
+                tbody.innerHTML = "";
 
-                const total = results.length;
-                const posPercent = total > 0 ? Math.round((posCount / total) * 100) : 0;
-                const negPercent = total > 0 ? Math.round((negCount / total) * 100) : 0;
-                const neuPercent = total > 0 ? (100 - posPercent - negPercent) : 0;
-
-                document.getElementById("stat-positive").innerText = posPercent + "%";
-                document.getElementById("stat-negative").innerText = negPercent + "%";
-                document.getElementById("stat-neutral").innerText = neuPercent + "%";
-                
-                // Seçilen modelin duygu analizine göre Ortalama Puanı (Average Rating) hesapla
-                const avgRating = total > 0 ? (modelScoreSum / total).toFixed(1) : 0;
-                document.getElementById("stat-rating").innerHTML = `${avgRating} <span class="stat-value-small">/5</span>`;
-
-                // Pasta grafiğini (Pie Chart) de yeni yüzdeliklere göre dinamik güncelle
-                const pieCanvas = document.getElementById('pieChart');
-                if (pieCanvas) {
-                    let existingPie = Chart.getChart(pieCanvas);
-                    if (existingPie) {
-                        existingPie.data.datasets[0].data = [posPercent, neuPercent, negPercent];
-                        existingPie.update();
-                    }
+                if (data.reviews.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="3" class="text-center py-4 text-secondary">No reviews found.</td></tr>';
+                } else {
+                    data.reviews.forEach((r, idx) => {
+                        const sentimentClass = r.sentiment === "Positive" ? "pos" : (r.sentiment === "Negative" ? "neg" : "neu");
+                        const rowNum = (currentPage - 1) * 10 + idx + 1;
+                        tbody.innerHTML += `
+                            <tr class="fade-in" style="animation-delay: ${idx * 0.05}s">
+                                <td>${rowNum}</td>
+                                <td>
+                                    ${r.review_text}
+                                    <span class="ai-model-tag"><i class="fas fa-magic"></i> Generated by ${model_name}</span>
+                                </td>
+                                <td>
+                                    <span class="sentiment-badge ${sentimentClass}">${r.sentiment}</span>
+                                </td>
+                            </tr>
+                        `;
+                    });
                 }
 
-                document.getElementById("resultsTable").style.display = "block";
+                // Render KPIs and remove skeleton
+                document.querySelectorAll('.kpi-val').forEach(el => el.classList.remove('skeleton'));
+                document.getElementById("kpi-positive").innerText = `${data.distribution.Positive || 0}%`;
+                document.getElementById("kpi-neutral").innerText = `${data.distribution.Neutral || 0}%`;
+                document.getElementById("kpi-negative").innerText = `${data.distribution.Negative || 0}%`;
+                document.getElementById("kpi-avg-rating").innerText = data.avg_rating ? data.avg_rating.toFixed(1) : "0.0";
+                
+                showToast(`${model_name} analysis complete.`);
 
             } catch (error) {
-                console.error("API Error:", error);
-                if (errorMsg) {
-                    errorMsg.innerHTML = '<i class="fas fa-exclamation-triangle me-2"></i>Error connecting to API. Make sure the FastAPI server is running.';
-                    errorMsg.classList.remove("d-none");
-                }
-            } finally {
-                if (btn) {
-                    btn.innerHTML = '<i class="fas fa-robot me-2"></i>Analyze CSV Data';
-                    btn.disabled = false;
-                }
+                clearInterval(streamingInterval);
+                document.querySelectorAll('.kpi-val').forEach(el => el.classList.remove('skeleton'));
+                showError("Error connecting to server. Make sure FastAPI backend is running.");
             }
+        }
+
+        function showError(msg) {
+            const errorMsg = document.getElementById("errorMessage");
+            errorMsg.innerText = msg;
+            errorMsg.classList.remove("d-none");
+        }
+
+        function hideError() {
+            document.getElementById("errorMessage").classList.add("d-none");
         }
     </script>
 </body>

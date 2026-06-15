@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Campaigns Analysis Dashboard</title>
+    <title>Campaign & Price Comparison Analysis</title>
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -11,153 +11,596 @@
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Outfit', -apple-system, sans-serif;
+            background-color: #f6f8fb;
+            color: #333333;
+            min-height: 100vh;
+        }
+
+        /* Top Navbar matching the design */
+        .navbar {
+            background-color: #ffffff !important;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 12px 24px;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: #1e293b !important;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #475569 !important;
+            font-weight: 500;
+            padding: 8px 16px !important;
+            margin: 0 4px;
+            border-radius: 8px;
+        }
+
+        .nav-link.active-tab {
+            background-color: #54bab9 !important;
+            color: #ffffff !important;
+            border-radius: 8px;
+        }
+
+        /* Title card banner */
+        .dashboard-header-card {
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 16px 24px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .dashboard-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin: 0;
+        }
+
+        .form-select {
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 8px 16px;
+            color: #334155;
+            background-color: #ffffff;
+            height: 42px;
+        }
+
+        .btn-compare {
+            background-color: #2563eb;
+            color: #ffffff;
+            font-weight: 500;
+            border: none;
+            border-radius: 8px;
+            height: 42px;
+            padding: 0 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-compare:hover {
+            background-color: #1d4ed8;
+            color: #ffffff;
+        }
+
+        /* AI Commentary Box matching screenshot style */
+        .ai-commentary-box {
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.04) 0%, rgba(129, 140, 248, 0.01) 100%);
+            border: 1px solid rgba(79, 70, 229, 0.15);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        /* KPI cards matching screenshot style */
+        .kpi-card {
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        .kpi-icon-container {
+            width: 52px;
+            height: 52px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin-right: 16px;
+            flex-shrink: 0;
+        }
+
+        .kpi-icon-container.lowest { background-color: #ecfdf5; color: #10b981; }
+        .kpi-icon-container.avg { background-color: #f1f5f9; color: #64748b; }
+        .kpi-icon-container.discount { background-color: #fffbeb; color: #f59e0b; }
+        .kpi-icon-container.risk { background-color: #fef2f2; color: #ef4444; }
+
+        .kpi-val {
+            font-size: 1.6rem;
+            font-weight: 700;
+            line-height: 1.1;
+        }
+
+        .kpi-val.lowest { color: #10b981; }
+        .kpi-val.avg { color: #475569; }
+        .kpi-val.discount { color: #f59e0b; }
+        .kpi-val.risk { color: #ef4444; }
+
+        .kpi-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #64748b;
+            margin: 0;
+        }
+
+        .kpi-subtitle {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin: 0;
+            margin-top: 2px;
+        }
+
+        /* Main Chart and Table Row */
+        .chart-card {
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 24px;
+            height: 420px;
+            margin-bottom: 24px;
+        }
+
+        .chart-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 16px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 320px;
+            width: 100%;
+        }
+
+        /* Suspicious Pricing Movements Table Card */
+        .table-card {
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .table-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .table-title i {
+            color: #ff9800;
+        }
+
+        .table {
+            border: 1px solid #e5e7eb;
+            margin-bottom: 0;
+        }
+
+        .table th {
+            background-color: #f8fafc;
+            color: #1e293b;
+            font-weight: 600;
+            border-bottom: 2px solid #e5e7eb;
+            padding: 12px;
+        }
+
+        .table td {
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb;
+            vertical-align: middle;
+        }
+    </style>
 </head>
-<body class="bg-light">
-    <!-- Navigation Menu -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+<body>
+    <!-- Top Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
         <div class="container-fluid">
-            <a class="navbar-brand fw-bold" href="#">
-                <i class="fas fa-chart-line me-2"></i>Analytics Platform
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-chart-line"></i> Analytics Platform
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-smile me-1"></i>Sentiment Analysis</a></li>
                     <li class="nav-item"><a class="nav-link" href="price-manipulation.html"><i class="fas fa-exclamation-triangle me-1"></i>Price Manipulation</a></li>
                     <li class="nav-item"><a class="nav-link" href="product-detail.html"><i class="fas fa-box me-1"></i>Product Detail</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="manipulation-campaigns.html"><i class="fas fa-bullseye me-1"></i>Campaigns</a></li>
+                    <li class="nav-item"><a class="nav-link active-tab" href="manipulation-campaigns.html"><i class="fas fa-bullseye me-1"></i>Campaigns</a></li>
+                    <li class="nav-item"><a class="nav-link text-indigo-600" href="admin.html"><i class="fas fa-user-shield me-1"></i>Admin Panel</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
     <div class="container-fluid p-4">
-        <!-- Hero Header instead of KPIs -->
-        <div class="campaign-header mb-4 d-flex justify-content-between align-items-center">
-            <div>
-                <h2 class="fw-bold m-0"><i class="fas fa-bullhorn me-2"></i>Macro Campaign Analysis</h2>
-                <p class="m-0 mt-1 opacity-75">Detecting platform-wide fake sales, astroturfing, and coordinated seller manipulations.</p>
-            </div>
+        <!-- Header banner -->
+        <div class="dashboard-header-card shadow-sm">
+            <h2 class="dashboard-title">Smart Deal Finder & Platform Comparison</h2>
             <div class="d-flex gap-2">
-                <select class="form-select border-0 shadow-sm" id="eventFilter" onchange="renderCharts()">
-                    <option value="black_friday">Black Friday 2025</option>
-                    <option value="cyber_monday">Cyber Monday 2025</option>
-                    <option value="spring_sale">Spring Clearance</option>
+                <select class="form-select" id="storeSelect" style="min-width: 150px;">
+                    <option value="">All Stores</option>
+                    <option value="Amazon">Amazon</option>
+                    <option value="Trendyol">Trendyol</option>
+                    <option value="Hepsiburada">Hepsiburada</option>
+                    <option value="MediaMarkt">MediaMarkt</option>
+                    <option value="Watsons">Watsons</option>
+                    <option value="Gratis">Gratis</option>
                 </select>
+                <select class="form-select" id="productSelect" style="min-width: 200px;">
+                    <!-- Loaded dynamically -->
+                </select>
+                <select class="form-select" id="modelSelect" style="width: auto;">
+                    <option value="bert" selected>Fine-Tuned BERT</option>
+                </select>
+                <button class="btn btn-compare" onclick="loadPriceAnalysis()" id="analyzeBtn">
+                    <i class="fas fa-search"></i> Find Best Deals
+                </button>
             </div>
         </div>
 
-        <!-- Analytical Charts Row -->
-        <div class="row g-4 mb-4">
-            <!-- Bubble Chart: Discount Illusion -->
-            <div class="col-lg-8">
-                <div class="chart-card">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h6 class="chart-title mb-0">Discount Illusion Mapping</h6>
-                        <span class="badge bg-light text-dark shadow-sm"><i class="fas fa-info-circle me-1"></i> Bubble size = Volume of Products</span>
+        <div id="errorMessage" class="alert alert-danger d-none mb-4 shadow-sm border-0 rounded-3"></div>
+
+        <!-- AI Commentary Box -->
+        <div class="ai-commentary-box shadow-sm mb-4" id="aiCommentaryBox">
+            <h5 class="fw-bold text-dark mb-2"><i class="fas fa-robot me-2 text-indigo-600"></i>AI-Powered Report Summary</h5>
+            <p class="m-0 text-secondary" id="aiCommentaryText">Analyzing pricing records...</p>
+        </div>
+
+        <!-- Stats row matching design -->
+        <div class="row g-3 mb-4">
+            <!-- KPI 1: Lowest Price -->
+            <div class="col-md-3">
+                <div class="kpi-card shadow-sm">
+                    <div class="kpi-icon-container lowest">
+                        <i class="fas fa-tag"></i>
                     </div>
-                    <div class="chart-container">
-                        <canvas id="bubbleChart"></canvas>
+                    <div>
+                        <div class="kpi-val lowest" id="stat-lowest">...</div>
+                        <div class="kpi-title" id="stat-lowest-label">Lowest Price</div>
+                        <div class="kpi-subtitle">Cheapest platform available</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Heatmap / Category Risk List -->
-            <div class="col-lg-4">
-                <div class="chart-card">
-                    <h6 class="chart-title">High-Risk Categories</h6>
-                    
-                    <!-- Risk Item 1 -->
-                    <div class="mb-4">
-                        <div class="d-flex justify-content-between mb-1">
-                            <span class="fw-bold"><i class="fas fa-laptop me-2 text-primary"></i>Electronics</span>
-                            <span class="badge bg-danger">Critical Risk</span>
-                        </div>
-                        <div class="progress" style="height: 8px;">
-                            <div class="progress-bar bg-danger" role="progressbar" style="width: 85%"></div>
-                        </div>
-                        <small class="text-muted">85% of discounts flagged as artificial</small>
+            <!-- KPI 2: Average Price -->
+            <div class="col-md-3">
+                <div class="kpi-card shadow-sm">
+                    <div class="kpi-icon-container avg">
+                        <i class="fas fa-calculator"></i>
                     </div>
-
-                    <!-- Risk Item 2 -->
-                    <div class="mb-4">
-                        <div class="d-flex justify-content-between mb-1">
-                            <span class="fw-bold"><i class="fas fa-tshirt me-2 text-warning"></i>Apparel</span>
-                            <span class="badge bg-warning text-dark">Moderate Risk</span>
-                        </div>
-                        <div class="progress" style="height: 8px;">
-                            <div class="progress-bar bg-warning" role="progressbar" style="width: 55%"></div>
-                        </div>
-                        <small class="text-muted">Pre-campaign inflation detected in 55% items</small>
+                    <div>
+                        <div class="kpi-val avg" id="stat-avg">...</div>
+                        <div class="kpi-title">Average Price</div>
+                        <div class="kpi-subtitle">Mean market pricing trend</div>
                     </div>
+                </div>
+            </div>
 
-                    <!-- Risk Item 3 -->
-                    <div class="mb-4">
-                        <div class="d-flex justify-content-between mb-1">
-                            <span class="fw-bold"><i class="fas fa-couch me-2 text-success"></i>Home & Furniture</span>
-                            <span class="badge bg-success">Low Risk</span>
-                        </div>
-                        <div class="progress" style="height: 8px;">
-                            <div class="progress-bar bg-success" role="progressbar" style="width: 15%"></div>
-                        </div>
-                        <small class="text-muted">Most campaigns reflect genuine price drops</small>
+            <!-- KPI 3: Discount Rate -->
+            <div class="col-md-3">
+                <div class="kpi-card shadow-sm">
+                    <div class="kpi-icon-container discount">
+                        <i class="fas fa-percent"></i>
+                    </div>
+                    <div>
+                        <div class="kpi-val discount" id="stat-discount">...</div>
+                        <div class="kpi-title">Discount Rate</div>
+                        <div class="kpi-subtitle">Average discount detected</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KPI 4: AI Recommendation -->
+            <div class="col-md-3">
+                <div class="kpi-card shadow-sm">
+                    <div class="kpi-icon-container risk" id="stat-risk-icon" style="background-color: #ecfdf5; color: #10b981;">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div>
+                        <div class="kpi-val risk" id="stat-risk" style="color: #10b981;">...</div>
+                        <div class="kpi-title">AI Recommendation</div>
+                        <div class="kpi-subtitle">Smart purchase advice</div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- AI DEAL SCORE SECTION -->
+        <div class="card shadow-sm border-0 p-4 mb-4" style="border-radius: 16px;">
+            <div class="row align-items-center">
+                <div class="col-md-5 border-md-end">
+                    <h5 class="fw-bold mb-3"><i class="fas fa-chart-line text-primary me-2"></i>AI Deal Score</h5>
+                    <div class="d-flex justify-content-between align-items-end mb-2 pe-md-4">
+                        <span class="fw-bold fs-1" id="scoreValue" style="color: #64748b; line-height: 1;">0 <span style="font-size: 1.2rem; color: #94a3b8;">/ 100</span></span>
+                        <span class="badge px-3 py-2 rounded-pill fs-6" id="scoreBadge" style="background-color: #f1f5f9; color: #64748b;">Analyzing...</span>
+                    </div>
+                    <div class="progress mt-3 pe-md-4" style="height: 12px; border-radius: 10px; background-color: #f1f5f9;">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" id="scoreProgressBar" role="progressbar" style="width: 0%; border-radius: 10px;"></div>
+                    </div>
+                    <div class="d-flex justify-content-between mt-2 text-muted pe-md-4" style="font-size: 0.8rem;">
+                        <span>0 (Poor Deal)</span>
+                        <span>50 (Average)</span>
+                        <span>100 (Must Buy)</span>
+                    </div>
+                </div>
+                <div class="col-md-7 ps-md-4 mt-4 mt-md-0">
+                    <p class="text-secondary mb-0" style="font-size:0.95rem; line-height: 1.6;">
+                        This score calculates your price advantage compared to the historical market mean. <br><br>
+                        <strong>Formula:</strong> <code class="bg-light px-2 py-1 rounded text-dark border">100 - (Lowest Price / Average Price) * 50</code> <br><br>
+                        <em><i class="fas fa-info-circle me-1"></i> Note: If AI detects fake discounts on any platform, the final score drops by 30 points to penalize market manipulation.</em>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Table Card -->
+        <div class="card table-card shadow-sm mb-4">
+            <div class="table-title">
+                <i class="fas fa-shopping-cart text-success"></i> Current Deals & Platform Comparison
+            </div>
+            
+            <div class="table-responsive">
+                <table class="table align-middle">
+                    <thead>
+                        <tr>
+                            <th>Platform (Seller)</th>
+                            <th>Last Checked</th>
+                            <th>Label Price</th>
+                            <th>Current Price</th>
+                            <th>Discount</th>
+                            <th>AI Recommendation</th>
+                        </tr>
+                    </thead>
+                    <tbody id="anomalyTableBody">
+                        <tr>
+                            <td colspan="7" class="text-center py-4 text-secondary">
+                                <i class="fas fa-circle-notch fa-spin me-2"></i>Running query...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
 
-    <!-- Bootstrap & Chart.js -->
+    <!-- Bootstrap JS & Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-
+    
     <script>
-        let bubbleChartInstance = null;
+        const API_URL = "http://127.0.0.1:8000";
+        let lineChartInstance = null;
+        let gaugeChartInstance = null;
 
-        document.addEventListener("DOMContentLoaded", () => {
-            renderCharts();
+        document.addEventListener("DOMContentLoaded", async () => {
+            await loadProducts();
+            loadPriceAnalysis();
         });
 
-        function renderCharts() {
-            const ctx = document.getElementById('bubbleChart').getContext('2d');
+        async function loadProducts() {
+            try {
+                const res = await fetch(`${API_URL}/api/products`);
+                const products = await res.json();
+                
+                const select = document.getElementById("productSelect");
+                select.innerHTML = "";
+                
+                const newProductId = localStorage.getItem("newly_activated_product");
+                
+                products.forEach((p, idx) => {
+                    const isNew = newProductId && p.id.toString() === newProductId;
+                    const nameDisplay = isNew ? `${p.name} (NEW)` : p.name;
+                    const isSelected = isNew || (!newProductId && idx === 0) ? "selected" : "";
+                    select.innerHTML += `<option value="${p.id}" ${isSelected}>${nameDisplay}</option>`;
+                });
+            } catch (error) {
+                showError("Could not load product list.");
+            }
+        }
+
+        async function loadPriceAnalysis() {
+            const btn = document.getElementById("analyzeBtn");
+            const product_id = document.getElementById("productSelect").value;
+            const model_type = document.getElementById("modelSelect").value;
+            const store = document.getElementById("storeSelect").value;
+            if(!product_id) return;
             
-            if (bubbleChartInstance) {
-                bubbleChartInstance.destroy();
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
+            btn.disabled = true;
+            document.getElementById("errorMessage").classList.add("d-none");
+            
+            // Set skeleton loaders for KPIs
+            document.querySelectorAll('.kpi-val').forEach(el => {
+                el.innerHTML = '<div style="height: 20px; width: 60px; background: #e2e8f0; animation: pulse 1.5s infinite; border-radius: 4px;"></div>';
+            });
+            
+            document.getElementById("aiCommentaryText").innerHTML = '<div style="height: 16px; width: 80%; background: #e2e8f0; animation: pulse 1.5s infinite; border-radius: 4px;"></div>';
+            
+            try {
+                let url = `${API_URL}/api/campaigns/deals?product_id=${product_id}`;
+                if(store) url += `&store=${encodeURIComponent(store)}`;
+                
+                const res = await fetch(url);
+                const data = await res.json();
+                
+                if (data.error) {
+                    showError(data.error);
+                    return;
+                }
+
+                // Render KPIs
+                document.getElementById("stat-lowest").innerText = `$${data.stats.best_price}`;
+                document.getElementById("stat-lowest-label").innerText = `Lowest: ${data.stats.best_seller}`;
+                document.getElementById("stat-avg").innerText = `$${data.stats.avg_price}`;
+                document.getElementById("stat-discount").innerText = `%${data.stats.avg_discount_pct}`;
+                
+                const recEl = document.getElementById("stat-risk");
+                const recIconEl = document.getElementById("stat-risk-icon");
+                if (data.stats.deal_score >= 80) {
+                    recEl.innerText = "Buy Now";
+                    recEl.style.color = "#10b981";
+                    recIconEl.style.backgroundColor = "#ecfdf5";
+                    recIconEl.style.color = "#10b981";
+                    recIconEl.innerHTML = '<i class="fas fa-shopping-cart"></i>';
+                } else if (data.stats.deal_score >= 50) {
+                    recEl.innerText = "Good Deal";
+                    recEl.style.color = "#f59e0b";
+                    recIconEl.style.backgroundColor = "#fffbeb";
+                    recIconEl.style.color = "#f59e0b";
+                    recIconEl.innerHTML = '<i class="fas fa-check"></i>';
+                } else {
+                    recEl.innerText = "Wait / Fake";
+                    recEl.style.color = "#ef4444";
+                    recIconEl.style.backgroundColor = "#fef2f2";
+                    recIconEl.style.color = "#ef4444";
+                    recIconEl.innerHTML = '<i class="fas fa-times"></i>';
+                }
+
+                // Render Deal Score UI
+                const score = data.stats.deal_score;
+                document.getElementById("scoreValue").innerHTML = `${score} <span style="font-size: 1.2rem; color: #94a3b8;">/ 100</span>`;
+                
+                const scoreBar = document.getElementById("scoreProgressBar");
+                const scoreBadge = document.getElementById("scoreBadge");
+                const scoreValueWrap = document.getElementById("scoreValue");
+                
+                scoreBar.style.width = `${score}%`;
+                
+                if (score >= 80) {
+                    scoreBar.className = "progress-bar bg-success";
+                    scoreBadge.className = "badge px-3 py-2 rounded-pill fs-6 bg-success-subtle text-success";
+                    scoreBadge.innerHTML = '<i class="fas fa-fire me-1"></i> Excellent Deal';
+                    scoreValueWrap.style.color = "#10b981";
+                } else if (score >= 50) {
+                    scoreBar.className = "progress-bar bg-warning";
+                    scoreBadge.className = "badge px-3 py-2 rounded-pill fs-6 bg-warning-subtle text-warning";
+                    scoreBadge.innerHTML = '<i class="fas fa-thumbs-up me-1"></i> Average Deal';
+                    scoreValueWrap.style.color = "#f59e0b";
+                } else {
+                    scoreBar.className = "progress-bar bg-danger";
+                    scoreBadge.className = "badge px-3 py-2 rounded-pill fs-6 bg-danger-subtle text-danger";
+                    scoreBadge.innerHTML = '<i class="fas fa-exclamation-triangle me-1"></i> Poor Deal';
+                    scoreValueWrap.style.color = "#ef4444";
+                }
+
+                // Render Table
+                const tbody = document.getElementById("anomalyTableBody");
+                tbody.innerHTML = "";
+                
+                if (data.deals.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" class="text-center py-4 text-secondary">No deals found for this product.</td></tr>';
+                } else {
+                    data.deals.forEach(deal => {
+                        tbody.innerHTML += `
+                            <tr>
+                                <td><span class="fw-medium">${deal.seller}</span></td>
+                                <td class="text-secondary">${deal.date}</td>
+                                <td class="text-secondary text-decoration-line-through">$${deal.original_price}</td>
+                                <td class="fw-bold text-dark">$${deal.current_price}</td>
+                                <td class="text-success"><i class="fas fa-arrow-down me-1"></i>%${deal.discount_pct}</td>
+                                <td>
+                                    <span class="badge bg-${deal.status_color}-subtle text-${deal.status_color} px-3 py-2 rounded-pill">
+                                        ${deal.ai_recommendation}
+                                    </span>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                }
+                
+                // AI Commentary
+                const commentaryEl = document.getElementById("aiCommentaryText");
+                if (data.stats.deal_score >= 80) {
+                    commentaryEl.innerHTML = `<strong>AI Deal Engine:</strong> Highly recommended! Found an excellent deal on <strong>${data.stats.best_seller}</strong> for $${data.stats.best_price}. Prices are significantly below the market average.`;
+                } else if (data.stats.deal_score >= 50) {
+                    commentaryEl.innerHTML = `<strong>AI Deal Engine:</strong> Market prices are stable. The lowest price is $${data.stats.best_price} at ${data.stats.best_seller}. Good time to buy if you need it.`;
+                } else {
+                    commentaryEl.innerHTML = `<strong>AI Deal Engine:</strong> Caution! Detected artificial price inflations or high prices. Wait for a real discount period.`;
+                }
+
+            } catch (error) {
+                showError("An error occurred during data analysis.");
+            } finally {
+                btn.innerHTML = '<i class="fas fa-search"></i> Compare Campaigns';
+                btn.disabled = false;
+            }
+        }
+
+
+
+        function renderAnomalyTable(anomalies) {
+            const tbody = document.getElementById("anomalyTableBody");
+            tbody.innerHTML = "";
+
+            if (!anomalies || anomalies.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-secondary">No suspicious price manipulation detected. All price margins are within normal ranges.</td></tr>';
+                return;
             }
 
-            // Mock Data for the Discount Illusion
-            // x: Claimed Discount %
-            // y: AI Manipulation Confidence Score %
-            // r: Radius (Volume of products affected in thousands)
-            const bubbleData = {
-                datasets: [{
-                    label: 'Coordinated Manipulations',
-                    data: [
-                        { x: 80, y: 95, r: 25, seller: 'MegaStore Inc.' },
-                        { x: 50, y: 88, r: 15, seller: 'Tech Outlet' },
-                        { x: 20, y: 15, r: 10, seller: 'Honest Brands' },
-                        { x: 65, y: 92, r: 20, seller: 'Fashion Hub' },
-                        { x: 10, y: 5,  r: 30, seller: 'Global Retail' },
-                    ],
-                    backgroundColor: 'rgba(220, 53, 69, 0.6)',
-                    borderColor: 'rgba(220, 53, 69, 1)',
-                    borderWidth: 1
-                }]
-            };
-
-            bubbleChartInstance = new Chart(ctx, {
-                type: 'bubble',
-                data: bubbleData,
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    // Grafiğe özel ayarlar eklenebilir
-                }
+            anomalies.forEach(row => {
+                const diff = (row.claimed_price - row.actual_price).toFixed(2);
+                tbody.innerHTML += `
+                    <tr>
+                        <td class="text-secondary fw-semibold">${row.date}</td>
+                        <td class="text-dark fw-medium">${row.seller}</td>
+                        <td class="text-secondary">$${row.claimed_price}</td>
+                        <td class="fw-bold text-success">$${row.actual_price}</td>
+                        <td class="text-danger fw-bold">$${diff}</td>
+                        <td class="fw-bold" style="color: #ec4899;">%${row.confidence}</td>
+                        <td><span class="badge bg-danger">Fake Discount</span></td>
+                    </tr>
+                `;
             });
+        }
+
+
+
+        function showError(msg) {
+            const errorMsg = document.getElementById("errorMessage");
+            errorMsg.innerText = msg;
+            errorMsg.classList.remove("d-none");
+        }
+
+        function hideError() {
+            document.getElementById("errorMessage").classList.add("d-none");
         }
     </script>
 </body>
