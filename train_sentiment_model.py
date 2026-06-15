@@ -117,7 +117,22 @@ def train_model(model_type, output_dir, sample_size=1000):
         
     tokenized_dataset = dataset.map(tokenize_fn, batched=True)
     tokenized_dataset = tokenized_dataset.remove_columns(["text"])
-    tokenized_dataset.set_format("torch")
+    
+    class TorchDataset(torch.utils.data.Dataset):
+        def __init__(self, hf_dataset):
+            self.hf_dataset = hf_dataset
+        def __len__(self):
+            return len(self.hf_dataset)
+        def __getitem__(self, idx):
+            item = self.hf_dataset[idx]
+            return {
+                "input_ids": torch.tensor(item["input_ids"]),
+                "attention_mask": torch.tensor(item["attention_mask"]),
+                "label": torch.tensor(item["label"])
+            }
+            
+    train_dataset = TorchDataset(tokenized_dataset["train"])
+    eval_dataset = TorchDataset(tokenized_dataset["test"])
     
     # Set Training Arguments
     training_args = TrainingArguments(
@@ -138,8 +153,8 @@ def train_model(model_type, output_dir, sample_size=1000):
     trainer = Trainer(
         model=model,
         args=training_args,
-        train_dataset=tokenized_dataset["train"],
-        eval_dataset=tokenized_dataset["test"],
+        train_dataset=train_dataset,
+        eval_dataset=eval_dataset,
         processing_class=tokenizer,
         compute_metrics=compute_metrics
     )
